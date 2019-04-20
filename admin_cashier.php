@@ -9,25 +9,23 @@ header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/
 exit();
 }
 if(isset($_POST['submit'])){
-$fname=$_POST['first_name'];
-if (!preg_match("/^[a-zA-Z ]*$/",$fname))
+$name=$_POST['Cashier_Name'];
+if (!preg_match("/^[a-zA-Z ]*$/",name))
   {
   $nameErr = "Only letters and white space allowed";
   }
-$lname=$_POST['last_name'];
-$sid=$_POST['staff_id'];
-$postal=$_POST['postal_address'];
-$phone=$_POST['phone'];
-$email=$_POST['email'];
+$sex=$POST['Cashier_Sex']
+$phone=$_POST['Cashier_Phone'];
 $user=$_POST['username'];
 $pas=$_POST['password'];
+$id=$_POST['Admin_id'];
 $sql1=mysqli_query($con,"SELECT * FROM cashier WHERE username='$user'")or die(mysqli_error($con));
  $result=mysqli_fetch_array($sql1);
  if($result>0){
 $message="<font color=blue>sorry the username entered already exists</font>";
  }else{
-$sql=mysqli_query($con,"INSERT INTO cashier(first_name,last_name,staff_id,postal_address,phone,email,username,password,date)
-VALUES('$fname','$lname','$sid','$postal','$phone','$email','$user','$pas',NOW())");
+$sql=mysqli_query($con,"INSERT INTO cashier(cashier_id,Cashier_Name,Cashier_Sex,Cashier_Phone,username,password,Admin_id)
+VALUES('$name','$sex','$phone','$user','$pas','$id'");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/admin_cashier.php");
 }else{
 $message1="<font color=red>Registration Failed, Try again</font>";
@@ -108,8 +106,7 @@ return false;
 <div id="button">
 <ul>
 			<li><a href="admin.php">Dashboard</a></li>
-			<li><a href="admin_pharmacist.php">Pharmacist</a></li>
-			<li><a href="admin_manager.php">Manager</a></li>
+			<li><a href="admin_pharmacist.php">Supplier</a></li>
 			<li><a href="admin_cashier.php">Cashier</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
@@ -157,9 +154,9 @@ return false;
                 // echo out the contents of each row into a table
                 echo "<tr>";
                 
-                echo '<td>' . $row['cashier_id'] . '</td>';
-                echo '<td>' . $row['first_name'] . '</td>';
-				echo '<td>' . $row['last_name'] . '</td>';
+                echo '<td>' . $row['Cashier_id'] . '</td>';
+                echo '<td>' . $row['Cashier_Name'] . '</td>';
+				echo '<td>' . $row['Cashier_Phone'] . '</td>';
 				echo '<td>' . $row['username'] . '</td>';
 				?>
 				<td><a href="update_cashier.php?username=<?php echo $row['username']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td>
@@ -177,14 +174,12 @@ return false;
 			  ?>
 		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="admin_cashier.php" method="post" >
 			<table width="220" height="106" border="0" >	
-				<tr><td align="center"><input name="first_name" type="text" style="width:170px" placeholder="First Name" required="required"  id="first_name" /></td></tr>
-				<tr><td align="center"><input name="last_name" type="text" style="width:170px" placeholder="Last Name" required="required" id="last_name" /></td></tr>
-				<tr><td align="center"><input name="staff_id" type="text" style="width:170px" placeholder="Staff ID" required="required" id="staff_id"/></td></tr>  
-				<tr><td align="center"><input name="postal_address" type="text" style="width:170px" placeholder="Address" required="required" id="postal_address" /></td></tr>  
-				<tr><td align="center"><input name="phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="phone" /></td></tr>  
-				<tr><td align="center"><input name="email" type="email" style="width:170px" placeholder="Email" required="required" id="email" /></td></tr>   
+				<tr><td align="center"><input name="Cashier_Name" type="text" style="width:170px" placeholder="First Name" required="required"  id="Cust_Name" /></td></tr>
+				<tr><td align="center"><input name="Cashier_Sex" type="text" style="width:170px" placeholder="Sex" required="required" id="Cust_Sex" /></td></tr>  
+				<tr><td align="center"><input name="Cashier_Phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="Cust_Phone" /></td></tr>   
 				<tr><td align="center"><input name="username" type="text" style="width:170px" placeholder="Username" required="required" id="username" /></td></tr>
 				<tr><td align="center"><input name="password" type="password" style="width:170px" placeholder="Password" required="required" id="password"/></td></tr>
+				<tr><td align="center"><input name="Admin_id" type="text" style="width:170px" placeholder="Foreign Key (if any)" required="required" id="Admin_id" /></td></tr>
 				<tr><td align="right"><input name="submit" type="submit" value="Submit"></td></tr>
 				
             </table>
