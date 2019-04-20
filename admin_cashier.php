@@ -174,9 +174,9 @@ return false;
 			  ?>
 		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="admin_cashier.php" method="post" >
 			<table width="220" height="106" border="0" >	
-				<tr><td align="center"><input name="Cashier_Name" type="text" style="width:170px" placeholder="First Name" required="required"  id="Cust_Name" /></td></tr>
-				<tr><td align="center"><input name="Cashier_Sex" type="text" style="width:170px" placeholder="Sex" required="required" id="Cust_Sex" /></td></tr>  
-				<tr><td align="center"><input name="Cashier_Phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="Cust_Phone" /></td></tr>   
+				<tr><td align="center"><input name="Cashier_Name" type="text" style="width:170px" placeholder="Name" required="required"  id="Cashier_Name" /></td></tr>
+				<tr><td align="center"><input name="Cashier_Sex" type="text" style="width:170px" placeholder="Sex" required="required" id="Cashier_Sex" /></td></tr>  
+				<tr><td align="center"><input name="Cashier_Phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="Cashier_Phone" /></td></tr>   
 				<tr><td align="center"><input name="username" type="text" style="width:170px" placeholder="Username" required="required" id="username" /></td></tr>
 				<tr><td align="center"><input name="password" type="password" style="width:170px" placeholder="Password" required="required" id="password"/></td></tr>
 				<tr><td align="center"><input name="Admin_id" type="text" style="width:170px" placeholder="Foreign Key (if any)" required="required" id="Admin_id" /></td></tr>
