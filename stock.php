@@ -9,17 +9,15 @@ header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."i
 exit();
 }
 if(isset($_POST['submit'])){
-$sname=$_POST['drug_name'];
-$cat=$_POST['category'];
-$des=$_POST['description'];
-$com=$_POST['company'];
-$sup=$_POST['supplier'];
-$qua=$_POST['quantity'];
-$cost=$_POST['cost'];
-$sta="Available";
+$sname=$_POST['Drug'];
+$qua=$_POST['Quantity'];
+$com=$_POST['Company'];
+$cost=$_POST['Cost'];
+$des=$_POST['Description'];
+$exp=$POST['Expiry_date']
 
-$sql=mysqli_query($con,"INSERT INTO stock(drug_name,category,description,company,supplier,quantity,cost,status,date_supplied)
-VALUES('$sname','$cat','$des','$com','$sup','$qua','$cost','$sta',NOW())");
+$sql=mysqli_query($con,"INSERT INTO stock(Drug,Quantity,Company,Cost,Description,Expiry_date)
+VALUES('$sname','$qua','$com','$cost','$des','des',$exp')");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/stock.php");
 }else{
 $message1="<font color=red>Registration Failed, Try again</font>";
@@ -43,13 +41,13 @@ $message1="<font color=red>Registration Failed, Try again</font>";
 <h1><a href="#"><img src="images/hd_logo.jpg"></a>  PESU PHARMA</h1></div>
 <div id="left_column">
 <div id="button">
-<ul>
-			<li><a href="manager.php">Dashboard</a></li>
-			<li><a href="view.php">View Users</a></li>
-			<li><a href="view_prescription.php">View Prescription</a></li>
-			<li><a href="stock.php">Manage Stock</a></li>
+        <ul>
+			<li><a href="admin.php">Dashboard</a></li>
+			<li><a href="admin_pharmacist.php">Supplier</a></li>
+			<li><a href="admin_Supplier.php">Supplier</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
+</div>	
 </div>
 		</div>
 <div id="main">
@@ -84,19 +82,18 @@ $message1="<font color=red>Registration Failed, Try again</font>";
                 or die(mysqli_error($con));
 		// display data in table
         echo "<table border='1' cellpadding='3'>";
-         echo "<tr><th>ID</th><th>Name</th><th>Category</th><th>Description</th><th>Status </th><th>Date </th><th>Delete</th></tr>";
+         echo "<tr><th>ID</th><th>Name</th><th>Company</th><th>Description</th><th>Expiry Date</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
                 
                 // echo out the contents of each row into a table
                 echo "<tr>";
-                 echo '<td>' . $row['stock_id'] . '</td>';               
-                echo '<td>' . $row['drug_name'] . '</td>';
-				echo '<td>' . $row['category'] . '</td>';
-				echo '<td>' . $row['description'] . '</td>';
-				echo '<td>' . $row['status'] . '</td>';
-				echo '<td>' . $row['date_supplied'] . '</td>';?>
+                 echo '<td>' . $row['stock_ID'] . '</td>';               
+                echo '<td>' . $row['Drug'] . '</td>';
+				echo '<td>' . $row['Company'] . '</td>';
+				echo '<td>' . $row['Description'] . '</td>';
+				echo '<td>' . $row['Expiry_date'] . '</td>';?>
 				<td><a href="delete_stock.php?stock_id=<?php echo $row['stock_id']?>"><img src="images/delete-icon.jpg" width="24" height="24" border="0" /></a></td>
 				<?php
 		 } 
@@ -111,13 +108,12 @@ $message1="<font color=red>Registration Failed, Try again</font>";
 			  ?>
 			<form name="myform" onsubmit="return validateForm(this);" action="stock.php" method="post" >
 			<table width="420" height="106" border="0" >	
-				<tr><td align="center"><input name="drug_name" type="text" style="width:170px" placeholder="Drug Name" required="required" id="drug_name" /></td></tr>
-				<tr><td align="center"><input name="category" type="text" style="width:170px" placeholder="Category" required="required" id="category"/></td></tr>
-				<tr><td align="center"><input name="description" type="text" style="width:170px" placeholder="Description" required="required" id="description" /></td></tr>
-				<tr><td align="center"><input name="company" type="text" style="width:170px" placeholder="Manufacturing Company"  required="required" id="company" /></td></tr>  
-				<tr><td align="center"><input name="supplier" type="text" style="width:170px" placeholder="Supplier" required="required" id="supplier" /></td></tr>  
-				<tr><td align="center"><input name="quantity" type="text" style="width:170px" placeholder="Quantity" required="required" id="quantity" /></td></tr>  
-				<tr><td align="center"><input name="cost" type="text" style="width:170px" placeholder="Unit Cost" required="required" id="cost" /></td></tr>  
+				<tr><td align="center"><input name="Drug" type="text" style="width:170px" placeholder="Drug Name" required="required" id="Drug" /></td></tr>
+				<tr><td align="center"><input name="Quantity" type="text" style="width:170px" placeholder="Quantity" required="required" id="Quantity" /></td></tr>
+				<tr><td align="center"><input name="Company" type="text" style="width:170px" placeholder="Manufacturing Company"  required="required" id="Company" /></td></tr>  
+				<tr><td align="center"><input name="cost" type="text" style="width:170px" placeholder="Unit Cost" required="required" id="cost" /></td></tr>
+				<tr><td align="center"><input name="Description" type="text" style="width:170px" placeholder="Description" required="required" id="Description" /></td></tr>
+				<tr><td align="center"><input name="Expiry_date" type="Date" style="width:170px" placeholder="Expiry Date" required="required" id="Expiry_date" /></td></tr>  
 				<tr><td align="center"><input name="submit" type="submit" value="Submit" id="submit"/></td></tr>
             </table>
 		</form>
