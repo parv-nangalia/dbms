@@ -24,7 +24,7 @@ $sql1=mysqli_query($con,"SELECT * FROM cashier WHERE username='$user'")or die(my
  if($result>0){
 $message="<font color=blue>sorry the username entered already exists</font>";
  }else{
-$sql=mysqli_query($con,"INSERT INTO cashier(cashier_id,Cashier_Name,Cashier_Sex,Cashier_Phone,username,password,Admin_id)
+$sql=mysqli_query($con,"INSERT INTO cashier(Cashier_Name,Cashier_Sex,Cashier_Phone,username,password,Admin_id)
 VALUES('$name','$sex','$phone','$user','$pas','$id'");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/admin_cashier.php");
 }else{
