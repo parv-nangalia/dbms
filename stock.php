@@ -82,7 +82,7 @@ $message1="<font color=red>Registration Failed, Try again</font>";
                 or die(mysqli_error($con));
 		// display data in table
         echo "<table border='1' cellpadding='3'>";
-         echo "<tr><th>ID</th><th>Name</th><th>Company</th><th>Quantity</th><th>Description</th><th>Expiry Date</th></tr>";
+         echo "<tr><th>ID</th><th>Name</th><th>Company</th><th>Quantity</th><th>Description</th><th>Expiry Date</th><th>Delete</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
