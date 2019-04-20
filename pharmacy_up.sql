@@ -141,7 +141,7 @@ INSERT INTO 'CUSTOMER' ('Cust_ID','Cust_Fname','Cust_Lname','username','password
 ('CUST4087','Terry','Davis','terry','terry123','Terry33@gmail.com',8462454915,'M',33,'7164 Kayla Street Port Tammy, IN 93040');
 ('CUST3854','Dustin','Stalder','dustin','dustin123','Dustin30@gmail.com',989129310,'M',30,'5491 Harris Neck Cohenmouth, MO 34799');
 ('CUST7041','Edmond','Richmond','edmond','edmond123','Edmond32@gmail.com',976282316,'M',32,'079 Linda Plain Powellmouth, MD 62941');
-('CUST9240','Evelyn','Goforth','evelyn','evelyn123',Evelyn19@gmail.com',930180396,'F',19,'PSC 9508, Box 4431 APO AP 96806');
+('CUST9240','Evelyn','Goforth','evelyn','evelyn123','Evelyn19@gmail.com',930180396,'F',19,'PSC 9508, Box 4431 APO AP 96806');
 ('CUST2821','Pablo','Warnke','pablo','pablo123','Pablo28@gmail.com',984908771,'M',28,'537 Stuart Fords Apt. 863 Whiteport, SD 56835');
 ('CUST5627','Michael','Vichidvongsa','michael','michael123','Michael22@gmail.com',824928573,'M',22,'7014 Jennings Walk Port Anna, NY 68646');
 ('CUST6783','Margaret','Kearney','margerat','margerat123','Margaret43@gmail.com',945839380,'F',43,'55244 Mendoza Estate West Teresaport, NH 11645');
@@ -160,13 +160,13 @@ INSERT INTO 'CUSTOMER' ('Cust_ID','Cust_Fname','Cust_Lname','username','password
 --
 
 CREATE TABLE IF NOT EXISTS 'PRESCRIPTION'(
-  Prescription_ID VARCHAR(10) NOT NULL,
-  Order_date DATE NOT NULL,
-  Customer_id VARCHAR(10) NOT NULL,
-  Customer_name VARCHAR(15) NOT NULL,
-  Drug_name VARCHAR(15) NOT NULL,
-  Drug_Quantity INT NOT NULL,
-  Cust_Phone INT NOT NULL,
+  `Prescription_ID` VARCHAR(10) NOT NULL,
+  `Order_date` DATE NOT NULL,
+  `Customer_id` VARCHAR(10) NOT NULL,
+  `Customer_name` VARCHAR(15) NOT NULL,
+  `Drug_name` VARCHAR(15) NOT NULL,
+  `Drug_Quantity` INT NOT NULL,
+  `Cust_Phone` INT NOT NULL,
   PRIMARY KEY(Prescription_ID)
   )ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
@@ -225,13 +225,13 @@ DELIMITER ;
 --
 
 CREATE TABLE IF NOT EXISTS 'STOCK'(
-  Stock_ID VARCHAR(10) NOT NULL,
-  Drug VARCHAR(25) NOT NULL,
-  Quantity INT,
-  Company VARCHAR(25) NOT NULL,
-  Cost INT,
-  Description VARCHAR(50),
-  Expiry_Date DATE,
+  `Stock_ID` VARCHAR(10) NOT NULL,
+  `Drug` VARCHAR(25) NOT NULL,
+  `Quantity` INT,
+  `Company` VARCHAR(25) NOT NULL,
+  `Cost` INT,
+  `Description` VARCHAR(50),
+  `Expiry_Date` DATE,
   PRIMARY KEY(Stock_ID)
   ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2;
 
