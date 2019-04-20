@@ -32,9 +32,9 @@ height: 470px;
 <div id="button">
 <ul>
 			<li><a href="admin.php">Dashboard</a></li>
-			<li><a href="admin_pharmacist.php">Pharmacist</a></li>
-			<li><a href="admin_manager.php">Manager</a></li>
+			<li><a href="admin_pharmacist.php">Supplier</a></li>
 			<li><a href="admin_cashier.php">Cashier</a></li>
+			<li><a href="stock.php">Manage Stock</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
 </div>
@@ -43,25 +43,21 @@ height: 470px;
     
  <!-- Dashboard icons -->
             <div class="grid_7">
-            	<a href="admin.php" class="dashboard-module">
-                	<img src="images/admin_icon.jpg" width="75" height="75" alt="edit" />
-                	<span>Dashboard</span>
-                </a>
                 <a href="admin_pharmacist.php" class="dashboard-module">
                 	<img src="images/pharmacist_icon.jpg"  width="75" height="75" alt="edit" />
-                	<span>Pharmacist</span>
-                </a>
-                
-                <a href="admin_manager.php" class="dashboard-module">
-                	<img src="images/manager_icon.png"  width="75" height="75" alt="edit" />
-                	<span>Manager</span>
+                	<span>Supplier</span>
                 </a>
                   
                 <a href="admin_cashier.php" class="dashboard-module">
                 	<img src="images/cashier_icon.jpg" width="75" height="75" alt="edit" />
                 	<span>Cashier</span>
-                </a>				  
-			</div>
+                </a>
+		    
+		<a href="stock.php" class="dashboard-module">
+                    <img src="images/stock_icon.jpg" width="100" height="100" alt="edit" />
+                    <span>Manage Stock</span>
+                </a>           
+	    </div>
 </div>
 <div id="footer" align="Center"> PESU PHARMA - 2019</div>
 </div>
