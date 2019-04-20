@@ -32,19 +32,20 @@ CREATE TABLE IF NOT EXISTS 'ADMINISTRATOR'(
   'Admin_Fname' VARCHAR(15) NOT NULL AUTO_INCREMENT,
   'Admin_Lname' VARCHAR(15),
   'Admin_Sex' CHAR(1),
-  'Admin_id_no' VARCHAR(10) NOT NULL,
-  'Admin_pw' VARCHAR(10) NOT NULL,
+  'Admin_id' VARCHAR(10) NOT NULL,
+  `username` varchar(10) NOT NULL,
+  `password` varchar(10) NOT NULL,
   'Phone_no' INT NOT NULL,
-  PRIMARY KEY('Admin_id_no')
+  PRIMARY KEY('Admin_id')
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO 'ADMINISTRATOR' ('Admin-Fname','Admin_Lname','Admin_Sex','Admin_id_no','Admin_pw','Phone_no') VALUES
-('DAVID','BENIOFF','M','ADMIN1320','davidl123',897123458);
-('DB','WEISS','M','ADMIN1501','weiss123',865322677);
+INSERT INTO 'ADMINISTRATOR' ('Admin-Fname','Admin_Lname','Admin_Sex','Admin_id','username','password','Phone_no') VALUES
+('DAVID','BENIOFF','M','ADMIN1320','david','davidl123',897123458);
+('DB','WEISS','M','ADMIN1501','db','weiss123',865322677);
 
 -- --------------------------------------------------------
 
@@ -57,10 +58,11 @@ CREATE TABLE IF NOT EXISTS 'CASHIER' (
   'Cashier_Name' VARCHAR(15) NOT NULL,
   'Cashier_Sex' CHAR(1),
   'Cashier_Phone' INT NOT NULL,
-  'Cashier_pw' VARCHAR(10) NOT NULL,
+  `username` varchar(10) NOT NULL,
+  `password` varchar(10) NOT NULL,
   'Admin_id' VARCHAR(10) NOT NULL,
   PRIMARY KEY(Cashier_id),
-  FOREIGN KEY(Admin_id)REFERENCES ADMINISTRATOR(Admin_id_no)
+  FOREIGN KEY(Admin_id)REFERENCES ADMINISTRATOR(Admin_id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 
@@ -68,11 +70,11 @@ CREATE TABLE IF NOT EXISTS 'CASHIER' (
 -- Dumping data for table `cashier`
 --
 
-INSERT INTO `CASHIER` (`cashier_id`, `Cashier_Name`, `Cashier_Sex`, `Cashier_Phone`, `Cashier_pw`, `Admin_id`) VALUES
-('CASHIER1002','ROBERT','M',654341324,'robert123','ADMIN1320');
-('CASHIER1021','NED','M',852642324,'ned123','ADMIN1501');
-('CASHIER2116','SKYLER','F',873465422,'sky123','ADMIN1320');
-('CASHIER3105','AEGON','M',811349828,'aegon123','ADMIN1501');
+INSERT INTO `CASHIER` (`cashier_id`, `Cashier_Name`, `Cashier_Sex`, `Cashier_Phone`,'username', `password`, `Admin_id`) VALUES
+('CASHIER1002','ROBERT','M',654341324,'robert','robert123','ADMIN1320');
+('CASHIER1021','NED','M',852642324,'ned','ned123','ADMIN1501');
+('CASHIER2116','SKYLER','F',873465422,'skyler','sky123','ADMIN1320');
+('CASHIER3105','AEGON','M',811349828,'aegon','aegon123','ADMIN1501');
 
 
 -- --------------------------------------------------------
@@ -85,6 +87,8 @@ CREATE TABLE IF NOT EXISTS 'SUPPLIER'(
   'Suppl_Gender' CHAR(1),
   'Supplier_phone' INT NOT NULL,
   'Cashiers_ID' VARCHAR(12) NOT NULL,
+  `username` varchar(10) NOT NULL,
+  `password` varchar(10) NOT NULL,
   PRIMARY KEY(Supplier_ID),
   FOREIGN KEY(Cashiers_ID)REFERENCES CASHIER(Cashier_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -93,31 +97,21 @@ CREATE TABLE IF NOT EXISTS 'SUPPLIER'(
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `SUPPLIER` (`Supplier_ID`, `Supplier_Name`, `Suppl_Gender`, `Supplier_phone`, `cashier_id`) VALUES
-('SUPPL2081','WATSON','M',852399213,'CASHIER2116');
-('SUPPL3123','OBERYN','M',851292763,'CASHIER1002');
-('SUPPL1987','DUSTIN','M',793359211,'CASHIER3105');
-('SUPPL1742','NANCY','F',852399213,'CASHIER3105');
-('SUPPL2342','CERSEI','F',782365912,'CASHIER1002');
-('SUPPL9876','PETYR','M',978659874,'CASHIER1021');
-
---
--- Triggers `invoice`
---
-DROP TRIGGER IF EXISTS `tarehe`;
-DELIMITER //
-CREATE TRIGGER `tarehe` AFTER INSERT ON `invoice`
- FOR EACH ROW BEGIN
-     SET @date=NOW();
-END
-//
-DELIMITER ;
+INSERT INTO `SUPPLIER` (`Supplier_ID`, `Supplier_Name`, `Suppl_Gender`, `Supplier_phone`, `cashier_id`,`username`,`password`) VALUES
+('SUPPL2081','WATSON','M',852399213,'CASHIER2116','watson','watson123');
+('SUPPL3123','OBERYN','M',851292763,'CASHIER1002','oberyn','oberyn123');
+('SUPPL1987','DUSTIN','M',793359211,'CASHIER3105','dustin','dustin123');
+('SUPPL1742','NANCY','F',852399213,'CASHIER3105','nancy','nancy123');
+('SUPPL2342','CERSEI','F',782365912,'CASHIER1002','cersei','cersei123');
+('SUPPL9876','PETYR','M',978659874,'CASHIER1021','petyr','petyr123');
 
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS 'CUSTOMER'(
   'Cust_ID' VARCHAR(10) NOT NULL,
   'Cust_Fname' VARCHAR(25) NOT NULL,
   'Cust_Lname' VARCHAR(25),
+  `username` varchar(10) NOT NULL,
+  `password` varchar(10) NOT NULL,
   'Cust_Email_id' VARCHAR(25),
   'Cust_Phone_no' INT NOT NULL,
   'Gender' CHAR(1) NOT NULL,
@@ -128,36 +122,36 @@ CREATE TABLE IF NOT EXISTS 'CUSTOMER'(
   )ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 
-INSERT INTO 'CUSTOMER' ('Cust_ID','Cust_Fname','Cust_Lname','Cust_Email_id','Cust_Phone_no','Gender','Age','Cust_Address') VALUES
-('CUST1903','JON','SNOW','jon@gmail.com',824756897,'M',47,'No 10 Avenue Street Winterfell');
-('CUST2102','JAIME','LANNISTER','jaime@gmail.com',824756898,'M',30,'241 OldTown Casterly Rock');
-('CUST1190','SHERLOCK','HOLMES','sherlock@gmail.com',822114897,'M',42,'221B Baker Street London');
-('CUST2001','STANNIS','B','stannis@gmail.com',824756224,'M',47,'No 132 6th Avenue Storms End');
-('CUST4322','DAENERYS','T','dany@gmail.com',824756899,'F',57,'32B Royal Street KingsLanding');
-('CUST9831','AARYA','STARK','aarya@gmail.com',824756111,'F',31,'56A Churchil Broadway Winterfell');
-('CUST8687','TYRION','L','tyrion@gmail.com',786756891,'M',32,'No 31 Park.Ave Casterly Rock');
-('CUST9898','WALTER','WHITE','wwhite@gmail.com',924256877,'M',34,'308 Negra Arroyo Lane Albuquerque');
-('CUST5621','CATELYN','NED','catelyn@gmail.com',821243897,'F',29,'212A HighTower Alley Riverrun');
-('CUST2185','Mary','Castillo','Mary21@gmail.com',989829568,'F',21,'7934 Dalton Crossing Ashleymouth, PA 16384');
-('CUST3525','Barrett','Boden','Barrett31@gmail.com',875811535,'M',31,'4027 Perkins Via Suite 382 West Johnmouth, MD 47755');
-('CUST1192','Araceli','Green','Araceli35@gmail.com',93534940,'F',35,'925 Sandra Centers Suite 307 Lake Cheyennehaven, PA 74398');
-('CUST9684','Gaynell','Martin','Gaynell36@gmail.com',947350396,'F',36,'7057 Johnson Pines North Thomasview, WV 88668');
-('CUST2956','Jeanette','Sacco','Jeanette31@gmail.com',852362061,'F',31,'94935 Brett Trail Johnsonfurt, DC 70179');
-('CUST2676','Wayne','Gillam','Wayne33@gmail.com',947276126,'M',33,'38915 Martinez Squares Port Melissa, MO 02852');
-('CUST4087','Terry','Davis','Terry33@gmail.com',8462454915,'M',33,'7164 Kayla Street Port Tammy, IN 93040');
-('CUST3854','Dustin','Stalder','Dustin30@gmail.com',989129310,'M',30,'5491 Harris Neck Cohenmouth, MO 34799');
-('CUST7041','Edmond','Richmond','Edmond32@gmail.com',976282316,'M',32,'079 Linda Plain Powellmouth, MD 62941');
-('CUST9240','Evelyn','Goforth','Evelyn19@gmail.com',930180396,'F',19,'PSC 9508, Box 4431 APO AP 96806');
-('CUST2821','Pablo','Warnke','Pablo28@gmail.com',984908771,'M',28,'537 Stuart Fords Apt. 863 Whiteport, SD 56835');
-('CUST5627','Michael','Vichidvongsa','Michael22@gmail.com',824928573,'M',22,'7014 Jennings Walk Port Anna, NY 68646');
-('CUST6783','Margaret','Kearney','Margaret43@gmail.com',945839380,'F',43,'55244 Mendoza Estate West Teresaport, NH 11645');
-('CUST8063','Lawrence','Dooley','Lawrence22@gmail.com',937022078,'M',22,'43759 Joshua Port Apt. 863 Tonyaborough, DE 30170');
-('CUST9455','David','Fitzpatrick','David18@gmail.com',931945810,'M',18,'26345 Bell Road West Aaronville, AR 22358');
-('CUST8981','Jesus','Negron','Jesus25@gmail.com',967965917,'M',25,'9667 Eric Stream Jameston, LA 33710');
-('CUST3710','Jeanette','Mitchell','Jeanette42@gmail.com',975398134,'F',42,'222 Penny Mountains Suite 316 Gomezborough, VA 85751');
-('CUST9241','Andrea','Desorcy','Andrea30@gmail.com',910474436,'F',30,'7520 Rangel Point Suite 467 New Joanne, MI 52563');
-('CUST5572','Christopher','Robinson','Christopher26@gmail.com',890691407,'M',26,'35728 Crystal Place Suite 463 Lake Kyle, IA 23358');
-('CUST1316','Robert','Hazlett','Robert31@gmail.com',891657445,'M',31,'244 Smith Parkways Port Carolinetown, HI 85674');
+INSERT INTO 'CUSTOMER' ('Cust_ID','Cust_Fname','Cust_Lname','username','password','Cust_Email_id','Cust_Phone_no','Gender','Age','Cust_Address') VALUES
+('CUST1903','JON','SNOW','jon','jon123','jon@gmail.com',824756897,'M',47,'No 10 Avenue Street Winterfell');
+('CUST2102','JAIME','LANNISTER','jaime','jaime123','jaime@gmail.com',824756898,'M',30,'241 OldTown Casterly Rock');
+('CUST1190','SHERLOCK','HOLMES','sherlock','sherlock123','sherlock@gmail.com',822114897,'M',42,'221B Baker Street London');
+('CUST2001','STANNIS','B','stannis','stannis123','stannis@gmail.com',824756224,'M',47,'No 132 6th Avenue Storms End');
+('CUST4322','DAENERYS','T','daenerys','daenerys123','dany@gmail.com',824756899,'F',57,'32B Royal Street KingsLanding');
+('CUST9831','AARYA','STARK','aarya','aarya123','aarya@gmail.com',824756111,'F',31,'56A Churchil Broadway Winterfell');
+('CUST8687','TYRION','L','tyrion','tyrion123','tyrion@gmail.com',786756891,'M',32,'No 31 Park.Ave Casterly Rock');
+('CUST9898','WALTER','WHITE','walter','walter123','wwhite@gmail.com',924256877,'M',34,'308 Negra Arroyo Lane Albuquerque');
+('CUST5621','CATELYN','NED','catelyn','catelyn123','catelyn@gmail.com',821243897,'F',29,'212A HighTower Alley Riverrun');
+('CUST2185','Mary','Castillo','mary','mary123','Mary21@gmail.com',989829568,'F',21,'7934 Dalton Crossing Ashleymouth, PA 16384');
+('CUST3525','Barrett','Boden','barrett','barrett123','Barrett31@gmail.com',875811535,'M',31,'4027 Perkins Via Suite 382 West Johnmouth, MD 47755');
+('CUST1192','Araceli','Green','araceli','araceli123','Araceli35@gmail.com',93534940,'F',35,'925 Sandra Centers Suite 307 Lake Cheyennehaven, PA 74398');
+('CUST9684','Gaynell','Martin','gaynell','gaynell123','Gaynell36@gmail.com',947350396,'F',36,'7057 Johnson Pines North Thomasview, WV 88668');
+('CUST2956','Jeanette','Sacco','jeanette','jeanette123','Jeanette31@gmail.com',852362061,'F',31,'94935 Brett Trail Johnsonfurt, DC 70179');
+('CUST2676','Wayne','Gillam','wayne','wayne123','Wayne33@gmail.com',947276126,'M',33,'38915 Martinez Squares Port Melissa, MO 02852');
+('CUST4087','Terry','Davis','terry','terry123','Terry33@gmail.com',8462454915,'M',33,'7164 Kayla Street Port Tammy, IN 93040');
+('CUST3854','Dustin','Stalder','dustin','dustin123','Dustin30@gmail.com',989129310,'M',30,'5491 Harris Neck Cohenmouth, MO 34799');
+('CUST7041','Edmond','Richmond','edmond','edmond123','Edmond32@gmail.com',976282316,'M',32,'079 Linda Plain Powellmouth, MD 62941');
+('CUST9240','Evelyn','Goforth','evelyn','evelyn123',Evelyn19@gmail.com',930180396,'F',19,'PSC 9508, Box 4431 APO AP 96806');
+('CUST2821','Pablo','Warnke','pablo','pablo123','Pablo28@gmail.com',984908771,'M',28,'537 Stuart Fords Apt. 863 Whiteport, SD 56835');
+('CUST5627','Michael','Vichidvongsa','michael','michael123','Michael22@gmail.com',824928573,'M',22,'7014 Jennings Walk Port Anna, NY 68646');
+('CUST6783','Margaret','Kearney','margerat','margerat123','Margaret43@gmail.com',945839380,'F',43,'55244 Mendoza Estate West Teresaport, NH 11645');
+('CUST8063','Lawrence','Dooley','lawrence','lawrence1123','Lawrence22@gmail.com',937022078,'M',22,'43759 Joshua Port Apt. 863 Tonyaborough, DE 30170');
+('CUST9455','David','Fitzpatrick','david','david123','David18@gmail.com',931945810,'M',18,'26345 Bell Road West Aaronville, AR 22358');
+('CUST8981','Jesus','Negron','jesus','jesus123','Jesus25@gmail.com',967965917,'M',25,'9667 Eric Stream Jameston, LA 33710');
+('CUST3710','Jeanette','Mitchell','jeanettem','jeanettem123','Jeanette42@gmail.com',975398134,'F',42,'222 Penny Mountains Suite 316 Gomezborough, VA 85751');
+('CUST9241','Andrea','Desorcy','andrea','andrea123','Andrea30@gmail.com',910474436,'F',30,'7520 Rangel Point Suite 467 New Joanne, MI 52563');
+('CUST5572','Christopher','Robinson','christopher','christopher123','Christopher26@gmail.com',890691407,'M',26,'35728 Crystal Place Suite 463 Lake Kyle, IA 23358');
+('CUST1316','Robert','Hazlett','robert','robert123','Robert31@gmail.com',891657445,'M',31,'244 Smith Parkways Port Carolinetown, HI 85674');
 
 -- --------------------------------------------------------
 
@@ -213,7 +207,7 @@ INSERT INTO `PRESCRIPTION` (`Prescription_ID`, `Order_date`, `Customer_id`, `Cus
 
 
 --
--- Triggers `prescription`  (just add them don't know its use)
+-- Triggers `prescription`  (just added this don't know its use)
 --
 DROP TRIGGER IF EXISTS `taree`;
 DELIMITER //
