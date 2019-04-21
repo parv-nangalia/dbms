@@ -6,7 +6,7 @@ $password=$_POST['password'];
 $position=$_POST['position'];
 switch($position){
 case 'Admin':
-$result=mysqli_query($con,"SELECT Admin_id, username FROM admin WHERE username='$username' AND password='$password'");
+$result=mysqli_query($con,"SELECT Admin_id, username FROM ADMINISTRATOR WHERE username='$username' AND password='$password'");
 $row=mysqli_fetch_array($result);
 if($row>0){
 session_start();
@@ -18,20 +18,20 @@ $message="<font color=red>Invalid login Try Again</font>";
 }
 break;
 case 'Supplier':
-$result=mysqli_query($con,"SELECT Supplier_id, Supplier_Name,username FROM pharmacist WHERE username='$username' AND password='$password'");
+$result=mysqli_query($con,"SELECT Supplier_id, Supplier_Name,username FROM SUPPLIER WHERE username='$username' AND password='$password'");
 $row=mysqli_fetch_array($result);
 if($row>0){
 session_start();
 $_SESSION['Supplier_id']=$row[0];
 $_SESSION['Supplier_Name']=$row[1];
 $_SESSION['username']=$row[2];
-header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/pharmacist.php");
+header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/supplier.php");
 }else{
 $message="<font color=red>Invalid login Try Again</font>";
 }
 break;
 case 'Cashier':
-$result=mysqli_query($con,"SELECT Cashier_id, Cashier_Name,username FROM cashier WHERE username='$username' AND password='$password'");
+$result=mysqli_query($con,"SELECT Cashier_id, Cashier_Name,username FROM CASHIER WHERE username='$username' AND password='$password'");
 $row=mysqli_fetch_array($result);
 if($row>0){
 session_start();
@@ -44,7 +44,7 @@ $message="<font color=red>Invalid login Try Again</font>";
 }
 break;
 case 'Customer':
-$result=mysqli_query($con,"SELECT Cust_ID, Cust_Fname,Cust_Lname,username FROM manager WHERE username='$username' AND password='$password'");
+$result=mysqli_query($con,"SELECT Cust_ID, Cust_Fname,Cust_Lname,username FROM CUSTOMER WHERE username='$username' AND password='$password'");
 $row=mysqli_fetch_array($result);
 if($row>0){
 session_start();
