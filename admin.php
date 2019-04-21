@@ -2,7 +2,7 @@
 session_start();
 include_once('connect_db.php');
 if(isset($_SESSION['username'])){
-$id=$_SESSION['admin_id'];
+$id=$_SESSION['Admin_id'];
 $user=$_SESSION['username'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
@@ -32,9 +32,9 @@ height: 470px;
 <div id="button">
 <ul>
 			<li><a href="admin.php">Dashboard</a></li>
-			<li><a href="admin_pharmacist.php">Supplier</a></li>
+			<li><a href="admin_supplier.php">Supplier</a></li>
 			<li><a href="admin_cashier.php">Cashier</a></li>
-			<li><a href="stock.php">Manage Stock</a></li>
+            <li><a href="stock.php">Manage Stock</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
 </div>
@@ -43,7 +43,7 @@ height: 470px;
     
  <!-- Dashboard icons -->
             <div class="grid_7">
-                <a href="admin_pharmacist.php" class="dashboard-module">
+                <a href="admin_supplier.php" class="dashboard-module">
                 	<img src="images/pharmacist_icon.jpg"  width="75" height="75" alt="edit" />
                 	<span>Supplier</span>
                 </a>
@@ -52,12 +52,12 @@ height: 470px;
                 	<img src="images/cashier_icon.jpg" width="75" height="75" alt="edit" />
                 	<span>Cashier</span>
                 </a>
-		    
-		<a href="stock.php" class="dashboard-module">
+
+                <a href="stock.php" class="dashboard-module">
                     <img src="images/stock_icon.jpg" width="100" height="100" alt="edit" />
                     <span>Manage Stock</span>
-                </a>           
-	    </div>
+                </a>				  
+			</div>
 </div>
 <div id="footer" align="Center"> PESU PHARMA - 2019</div>
 </div>

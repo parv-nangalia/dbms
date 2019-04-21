@@ -17,13 +17,13 @@ $des=$_POST['Description'];
 $exp=$POST['Expiry_date']
 
 $sql=mysqli_query($con,"INSERT INTO stock(Drug,Quantity,Company,Cost,Description,Expiry_date)
-VALUES('$sname','$qua','$com','$cost','$des','des',$exp')");
+VALUES('$sname','$qua','$com','$cost','$des','des',date(dd-mm-yyyy)')");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/stock.php");
 }else{
 $message1="<font color=red>Registration Failed, Try again</font>";
 }
 	}
-?>
+?>s
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,8 +43,8 @@ $message1="<font color=red>Registration Failed, Try again</font>";
 <div id="button">
         <ul>
 			<li><a href="admin.php">Dashboard</a></li>
+			<li><a href="admin_supplier.php">Supplier</a></li>
 			<li><a href="admin_cashier.php">Cashier</a></li>
-			<li><a href="admin_Supplier.php">Supplier</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
 </div>	
@@ -82,18 +82,17 @@ $message1="<font color=red>Registration Failed, Try again</font>";
                 or die(mysqli_error($con));
 		// display data in table
         echo "<table border='1' cellpadding='3'>";
-         echo "<tr><th>ID</th><th>Name</th><th>Company</th><th>Quantity</th><th>Expiry Date</th><th>Delete</th></tr>";
+         echo "<tr><th>ID</th><th>Name</th><th>Company</th><th>Expiry Date</th><th>Delete</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
                 
                 // echo out the contents of each row into a table
                 echo "<tr>";
-                echo '<td>' . $row['stock_ID'] . '</td>';               
+                 echo '<td>' . $row['stock_ID'] . '</td>';               
                 echo '<td>' . $row['Drug'] . '</td>';
-		echo '<td>' . $row['Company'] . '</td>';
-		echo '<td>' . $row['Quantity'] . '</td>';
-		echo '<td>' . $row['Expiry_date'] . '</td>';?>
+				echo '<td>' . $row['Company'] . '</td>';
+				echo '<td>' . $row['Expiry_date'] . '</td>';?>
 				<td><a href="delete_stock.php?stock_id=<?php echo $row['stock_id']?>"><img src="images/delete-icon.jpg" width="24" height="24" border="0" /></a></td>
 				<?php
 		 } 
