@@ -43,7 +43,7 @@ $message1="<font color=red>Registration Failed, Try again</font>";
 <div id="button">
         <ul>
 			<li><a href="admin.php">Dashboard</a></li>
-			<li><a href="admin_pharmacist.php">Supplier</a></li>
+			<li><a href="admin_cashier.php">Cashier</a></li>
 			<li><a href="admin_Supplier.php">Supplier</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
@@ -82,7 +82,7 @@ $message1="<font color=red>Registration Failed, Try again</font>";
                 or die(mysqli_error($con));
 		// display data in table
         echo "<table border='1' cellpadding='3'>";
-         echo "<tr><th>ID</th><th>Name</th><th>Company</th><th>Quantity</th><th>Description</th><th>Expiry Date</th><th>Delete</th></tr>";
+         echo "<tr><th>ID</th><th>Name</th><th>Company</th><th>Quantity</th><th>Expiry Date</th><th>Delete</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -93,7 +93,6 @@ $message1="<font color=red>Registration Failed, Try again</font>";
                 echo '<td>' . $row['Drug'] . '</td>';
 		echo '<td>' . $row['Company'] . '</td>';
 		echo '<td>' . $row['Quantity'] . '</td>';
-		echo '<td>' . $row['Description'] . '</td>';
 		echo '<td>' . $row['Expiry_date'] . '</td>';?>
 				<td><a href="delete_stock.php?stock_id=<?php echo $row['stock_id']?>"><img src="images/delete-icon.jpg" width="24" height="24" border="0" /></a></td>
 				<?php
