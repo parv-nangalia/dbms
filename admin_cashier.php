@@ -2,33 +2,34 @@
 session_start();
 include_once('connect_db.php');
 if(isset($_SESSION['username'])){
-$id=$_SESSION['Admin_id'];
+$id=$_SESSION['admin_id'];
 $username=$_SESSION['username'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
 exit();
 }
 if(isset($_POST['submit'])){
-$name=$_POST['Cashier_Name'];
+$name=$_POST['cashier_name'];
 if (!preg_match("/^[a-zA-Z ]*$/",name))
   {
   $nameErr = "Only letters and white space allowed";
   }
-$sex=$POST['Cashier_Sex'];
-$phone=$_POST['Cashier_Phone'];
+$cid = $_POST['cashier_id'];
+$sex=$_POST['cashier_sex'];
+$phone=$_POST['cashier_phone'];
 $user=$_POST['username'];
 $pas=$_POST['password'];
-$id=$_POST['Admin_id'];
-$sql1=mysqli_query($con,"SELECT * FROM cashier WHERE username='$user'")or die(mysqli_error($con));
+$id=$_POST['admin_id'];
+$sql1=mysqli_query($con,"SELECT * FROM CASHIER WHERE username='$user'")or die(mysqli_error($con));
  $result=mysqli_fetch_array($sql1);
  if($result>0){
 $message="<font color=blue>sorry the username entered already exists</font>";
  }else{
-$sql=mysqli_query($con,"INSERT INTO cashier(cashier_id,Cashier_Name,Cashier_Sex,Cashier_Phone,username,password,Admin_id)
-VALUES('$name','$sex','$phone','$user','$pas','$id'");
+$sql=mysqli_query($con,"INSERT INTO CASHIER VALUES('$id','$name','$sex','$phone','$user','$pas','$cid');");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/admin_cashier.php");
 }else{
 $message1="<font color=red>Registration Failed, Try again</font>";
+echo $message1;
 }
 	}}
 ?>
@@ -106,8 +107,9 @@ return false;
 <div id="button">
 <ul>
 			<li><a href="admin.php">Dashboard</a></li>
-			<li><a href="admin_supplier.php">Supplier</a></li>
+            <li><a href="stock.php">Stock</a></li>
 			<li><a href="admin_cashier.php">Cashier</a></li>
+			<li><a href="admin_supplier.php">Supplier</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
 </div>
@@ -115,7 +117,7 @@ return false;
 <div id="main">
 <div id="tabbed_box" class="tabbed_box">  
     <h4>Manage Cashier</h4> 
-<hr/>	
+<hr/>
     <div class="tabbed_area">  
 	
       
@@ -126,9 +128,7 @@ return false;
         </ul>  
           
         <div id="content_1" class="content">  
-		<?php /*echo $message;
-			  echo $message1;*/
-			  
+		<?php 
 		/* 
 		View
         Displays all data from 'Cashier' table
@@ -153,9 +153,9 @@ return false;
                 
                 // echo out the contents of each row into a table
                 echo "<tr>";
-                echo '<td>' . $row['Cashier_id'] . '</td>';
-                echo '<td>' . $row['Cashier_Name'] . '</td>';
-				echo '<td>' . $row['Cashier_Phone'] . '</td>';
+                echo '<td>' . $row['cashier_id'] . '</td>';
+                echo '<td>' . $row['cashier_name'] . '</td>';
+				echo '<td>' . $row['cashier_phone'] . '</td>';
 				echo '<td>' . $row['username'] . '</td>';
 				?>
 				<td><a href="update_cashier.php?username=<?php echo $row['username']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td>
@@ -173,12 +173,13 @@ return false;
 			  ?>
 		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="admin_cashier.php" method="post" >
 			<table width="220" height="106" border="0" >	
-				<tr><td align="center"><input name="Cashier_Name" type="text" style="width:170px" placeholder="First Name" required="required"  id="Cust_Name" /></td></tr>
-				<tr><td align="center"><input name="Cashier_Sex" type="text" style="width:170px" placeholder="Sex" required="required" id="Cust_Sex" /></td></tr>  
-				<tr><td align="center"><input name="Cashier_Phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="Cust_Phone" /></td></tr>   
+				<tr><td align="center"><input name="cashier_id" type="text" style="width:170px" placeholder="ID" required="required"  id="cashier_id" /></td></tr>
+				<tr><td align="center"><input name="cashier_name" type="text" style="width:170px" placeholder="First Name" required="required"  id="cashier_name" /></td></tr>
+				<tr><td align="center"><input name="cashier_sex" type="text" style="width:170px" placeholder="Sex" required="required" id="cashier_sex" /></td></tr>  
+				<tr><td align="center"><input name="cashier_phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="cashier_phone" /></td></tr>   
 				<tr><td align="center"><input name="username" type="text" style="width:170px" placeholder="Username" required="required" id="username" /></td></tr>
 				<tr><td align="center"><input name="password" type="password" style="width:170px" placeholder="Password" required="required" id="password"/></td></tr>
-				<tr><td align="center"><input name="Admin_id" type="text" style="width:170px" placeholder="Foreign Key (if any)" required="required" id="Admin_id" /></td></tr>
+				<tr><td align="center"><input name="admin_id" type="text" style="width:170px" placeholder="Foreign Key (if any)" required="required" id="admin_id" /></td></tr>
 				<tr><td align="right"><input name="submit" type="submit" value="Submit"></td></tr>
 				
             </table>
