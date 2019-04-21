@@ -2,7 +2,7 @@
 session_start();
 include_once('connect_db.php');
 if(isset($_SESSION['username'])){
-$id=$_SESSION['admin_id'];
+$id=$_SESSION['Admin_id'];
 $username=$_SESSION['username'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
@@ -14,7 +14,7 @@ if (!preg_match("/^[a-zA-Z ]*$/",name))
   {
   $nameErr = "Only letters and white space allowed";
   }
-$sex=$POST['Cashier_Sex']
+$sex=$POST['Cashier_Sex'];
 $phone=$_POST['Cashier_Phone'];
 $user=$_POST['username'];
 $pas=$_POST['password'];
@@ -96,7 +96,7 @@ return false;
  <style>
 <style>#left-column {height: 477px;}
  #main {height: 477px;}</style>
- </style>
+
 </head>
 <body>
 <div id="content">
@@ -153,7 +153,6 @@ return false;
                 
                 // echo out the contents of each row into a table
                 echo "<tr>";
-                
                 echo '<td>' . $row['Cashier_id'] . '</td>';
                 echo '<td>' . $row['Cashier_Name'] . '</td>';
 		echo '<td>' . $row['Cashier_Phone'] . '</td>';
@@ -161,7 +160,7 @@ return false;
 				<td><a href="update_cashier.php?username=<?php echo $row['username']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td>
 				<td><a href="delete_cashier.php?cashier_id=<?php echo $row['cashier_id']?>"><img src="images/delete-icon.jpg" width="35" height="35" border="0" /></a></td>
 				<?php
-		 } 
+		} 
         // close table>
         echo "</table>";
 ?> 

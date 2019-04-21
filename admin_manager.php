@@ -2,7 +2,7 @@
 session_start();
 include_once('connect_db.php');
 if(isset($_SESSION['username'])){
-$id=$_SESSION['admin_id'];
+$id=$_SESSION['Admin_id'];
 $username=$_SESSION['username'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
