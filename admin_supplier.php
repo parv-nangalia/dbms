@@ -106,8 +106,8 @@ return false;
 <div id="button">
 <ul>
 			<li><a href="admin.php">Dashboard</a></li>
-			<li><a href="admin_Cashier.php">Cashier</a></li>
-			<li><a href="admin_Supplier.php">Supplier</a></li>
+			<li><a href="admin_cashier.php">Cashier</a></li>
+			<li><a href="admin_supplier.php">Supplier</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
 </div>
@@ -139,14 +139,14 @@ return false;
 
         // get results from database
 		
-        $result = mysqli_query($con,"SELECT * FROM Supplier") 
+        $result = mysqli_query($con,"SELECT * FROM SUPPLIER") 
                 or die(mysqli_error($con));
 				
 					    
         // display data in table
         
         echo "<table border='1' cellpadding='5' align='center'>";
-        echo "<tr> <th>ID</th><th>Name</th><th>Contact Details</th><th>Username</th><th>Update</th><th>Delete</th></tr>";
+        echo "<tr> <th>ID</th><th>Firstname </th> <th>Lastname </th> <th>Username </th><th>Update </th><th>Delete</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -156,8 +156,9 @@ return false;
                 
                 echo '<td>' . $row['Supplier_id'] . '</td>';
                 echo '<td>' . $row['Supplier_Name'] . '</td>';
-		echo '<td>' . $row['Supplier_Phone'] . '</td>';
-		echo '<td>' . $row['username'] . '</td>';?>
+				echo '<td>' . $row['Supplier_Phone'] . '</td>';
+				echo '<td>' . $row['username'] . '</td>';
+				?>
 				<td><a href="update_Supplier.php?username=<?php echo $row['username']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td>
 				<td><a href="delete_Supplier.php?Supplier_id=<?php echo $row['Supplier_id']?>"><img src="images/delete-icon.jpg" width="35" height="35" border="0" /></a></td>
 				<?php

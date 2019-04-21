@@ -24,7 +24,7 @@ $sql1=mysqli_query($con,"SELECT * FROM cashier WHERE username='$user'")or die(my
  if($result>0){
 $message="<font color=blue>sorry the username entered already exists</font>";
  }else{
-$sql=mysqli_query($con,"INSERT INTO cashier(Cashier_Name,Cashier_Sex,Cashier_Phone,username,password,Admin_id)
+$sql=mysqli_query($con,"INSERT INTO cashier(cashier_id,Cashier_Name,Cashier_Sex,Cashier_Phone,username,password,Admin_id)
 VALUES('$name','$sex','$phone','$user','$pas','$id'");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/admin_cashier.php");
 }else{
@@ -106,7 +106,7 @@ return false;
 <div id="button">
 <ul>
 			<li><a href="admin.php">Dashboard</a></li>
-			<li><a href="admin_pharmacist.php">Supplier</a></li>
+			<li><a href="admin_supplier.php">Supplier</a></li>
 			<li><a href="admin_cashier.php">Cashier</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
@@ -139,14 +139,14 @@ return false;
 
         // get results from database
 		
-        $result = mysqli_query($con,"SELECT * FROM cashier") 
+        $result = mysqli_query($con,"SELECT * FROM CASHIER") 
                 or die(mysqli_error($con));
 				
 					    
         // display data in table
         
         echo "<table border='1' cellpadding='5' align='center'>";
-        echo "<tr> <th>ID</th><th>Name</th><th>Contact Details</th><th>Username</th><th>Update</th><th>Delete</th></tr>";
+        echo "<tr> <th>ID</th><th>Firstname </th> <th>Lastname </th> <th>Username </th><th>Update </th><th>Delete</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -155,8 +155,9 @@ return false;
                 echo "<tr>";
                 echo '<td>' . $row['Cashier_id'] . '</td>';
                 echo '<td>' . $row['Cashier_Name'] . '</td>';
-		echo '<td>' . $row['Cashier_Phone'] . '</td>';
-		echo '<td>' . $row['username'] . '</td>';?>
+				echo '<td>' . $row['Cashier_Phone'] . '</td>';
+				echo '<td>' . $row['username'] . '</td>';
+				?>
 				<td><a href="update_cashier.php?username=<?php echo $row['username']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td>
 				<td><a href="delete_cashier.php?cashier_id=<?php echo $row['cashier_id']?>"><img src="images/delete-icon.jpg" width="35" height="35" border="0" /></a></td>
 				<?php
@@ -172,9 +173,9 @@ return false;
 			  ?>
 		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="admin_cashier.php" method="post" >
 			<table width="220" height="106" border="0" >	
-				<tr><td align="center"><input name="Cashier_Name" type="text" style="width:170px" placeholder="Name" required="required"  id="Cashier_Name" /></td></tr>
-				<tr><td align="center"><input name="Cashier_Sex" type="text" style="width:170px" placeholder="Sex" required="required" id="Cashier_Sex" /></td></tr>  
-				<tr><td align="center"><input name="Cashier_Phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="Cashier_Phone" /></td></tr>   
+				<tr><td align="center"><input name="Cashier_Name" type="text" style="width:170px" placeholder="First Name" required="required"  id="Cust_Name" /></td></tr>
+				<tr><td align="center"><input name="Cashier_Sex" type="text" style="width:170px" placeholder="Sex" required="required" id="Cust_Sex" /></td></tr>  
+				<tr><td align="center"><input name="Cashier_Phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="Cust_Phone" /></td></tr>   
 				<tr><td align="center"><input name="username" type="text" style="width:170px" placeholder="Username" required="required" id="username" /></td></tr>
 				<tr><td align="center"><input name="password" type="password" style="width:170px" placeholder="Password" required="required" id="password"/></td></tr>
 				<tr><td align="center"><input name="Admin_id" type="text" style="width:170px" placeholder="Foreign Key (if any)" required="required" id="Admin_id" /></td></tr>
