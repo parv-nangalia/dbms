@@ -15,14 +15,9 @@ exit();
 <head>
 <title>PESU PHARMA</title>
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
-<link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
-<link rel="stylesheet" type="text/css" href="style/dashboard_styles.css"  media="screen" />
+<link rel="stylesheet" href="style/style.css" type="text/css"/> 
+<link rel="stylesheet" type="text/css" href="style/dashboard_styles.css"/>
 <script src="js/function.js" type="text/javascript"></script>
-<style>
-#left_column{
-height: 470px;
-}
-</style>
 </head>
 <body>
 <div id="content">
@@ -40,7 +35,7 @@ height: 470px;
 </div>
 </div>
 <div id="main">
-            <div class="grid_7">
+        <div class="grid_7">
 				<a href="view.php" class="dashboard-module">
                 	<img src="images/patients_1.png"  width="100" height="100" alt="edit" />
                 	<span>View Users</span>

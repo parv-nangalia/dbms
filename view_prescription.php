@@ -2,11 +2,9 @@
 session_start();
 include_once('connect_db.php');
 if(isset($_SESSION['username'])){
-$id=$_SESSION['manager_id'];
-$fname=$_SESSION['first_name'];
-$lname=$_SESSION['last_name'];
-$sid=$_SESSION['staff_id'];
 $user=$_SESSION['username'];
+$id=$_SESSION['cashier_id'];
+$name=$_SESSION['cashier_name'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
 exit();
@@ -19,10 +17,27 @@ exit();
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
 <link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
+<link rel="stylesheet" href="style/bootstrap.min.css" type="text/css" /> 
+<link rel="stylesheet" href="style/jquery.dataTables.min.css" type="text/css" /> 
+
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- DATA TABES SCRIPT -->
+<script src="js/datatables/jquery.dataaTables.js" type="text/javascript"></script>
+<script src="js/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="js/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+    $('#table1').DataTable( {
+        "lengthMenu": [[6,10, 25, 50, -1], [6,10, 25, 50, "All"]]
+    } );
+} );
+  </script>
 <script src="js/function1.js" type="text/javascript"></script>
-   <style>#left-column {height: 477px;}
- #main {height: 477px;}
-</style>
 </head>
 <body>
 <div id="content">
@@ -31,11 +46,11 @@ exit();
 <div id="left_column">
 <div id="button">
 		<ul>
-			<li><a href="manager.php">Dashboard</a></li>
-			<li><a href="view.php">View Users</a></li>
-			<li><a href="view_prescription.php">View Prescriptions</a></li>
-			<li><a href="stock.php">Manage Stock</a></li>
-			<li><a href="logout.php">Logout</a></li>
+                    <li><a href="cashier1.php">Dashboard</a></li>
+                    <li><a href="view.php">View Users</a></li>
+                    <li><a href="view_prescription.php">View Prescription</a></li>
+                    <li><a href="invoice.php">Create Invoice</a></li>
+                    <li><a href="logout.php">Logout</a></li>
 		</ul>	
 </div>
 </div>
@@ -59,25 +74,23 @@ exit();
         // connect to the database
         include_once('connect_db.php');
        // get results from database
-       $result = mysqli_query($con,"SELECT * FROM prescription")or die(mysqli_error($con));
+       $result = mysqli_query($con,"SELECT * FROM PRESCRIPTION")or die(mysqli_error($con));
 		// display data in table
-        echo "<table border='1' cellpadding='5'>";
-        echo "<tr> <th>Customer</th><th>Prescription N<sup>o</sup></th> <th>Invoice N<sup>o</sup></th><th>Date </th></tr>";
+        echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+        echo "<thead><tr> <th>Prescription ID</th><th>Customer Name</th><th>Date</th></tr></thead>";
         // loop through results of database query, displaying them in the table
+        echo "<tbody>";
         while($row = mysqli_fetch_array( $result )) {
                 // echo out the contents of each row into a table
                 echo "<tr>";
-                echo '<td>' . $row['customer_name'] . '</td>';
                 echo '<td>' . $row['prescription_id'] . '</td>';
-				echo '<td>' . $row['invoice_id'] . '</td>';
-				
-				echo '<td>' . $row['date'] . '</td>';
-				?>
-				
+                echo '<td>' . $row['customer_name'] . '</td>';
+                echo '<td>' . $row['order_date'] . '</td>';
+				?>				
 				<?php
-		 } 
+		}
         // close table>
-        echo "</table>";
+        echo "</tbody></table>";
 ?> 
         </div>  
 

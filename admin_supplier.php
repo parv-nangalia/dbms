@@ -96,10 +96,6 @@ return false;
 }
 
 </script>-->
- <style>
-<style>#left-column {height: 477px;}
- #main {height: 477px;}</style>
- </style>
 </head>
 <body>
 <div id="content">
@@ -118,8 +114,7 @@ return false;
 		</div>
 <div id="main">
 <div id="tabbed_box" class="tabbed_box">  
-    <h4>Manage Supplier</h4> 
-<hr/>	
+    <h4>Manage Supplier</h4> 	
     <div class="tabbed_area">  
 	
       

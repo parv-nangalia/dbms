@@ -94,10 +94,6 @@ return false;
 }
 
 </script>-->
- <style>
-<style>#left-column {height: 477px;}
- #main {height: 477px;}</style>
-
 </head>
 <body>
 <div id="content">
@@ -113,7 +109,7 @@ return false;
 			<li><a href="logout.php">Logout</a></li>
 		</ul>	
 </div>
-		</div>
+</div>
 <div id="main">
 <div id="tabbed_box" class="tabbed_box">  
     <h4>Manage Cashier</h4> 

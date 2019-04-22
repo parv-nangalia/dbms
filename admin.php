@@ -18,10 +18,6 @@ exit();
 <link rel="stylesheet" type="text/css" href="style/dashboard_styles.css"  media="screen" />
 <script src="js/function.js" type="text/javascript"></script>
 <style>
-#left_column{
-height: 470px;
-}
-
 </style>
 </head>
 <body>

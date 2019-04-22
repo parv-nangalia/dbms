@@ -15,14 +15,15 @@ $qua=$_POST['quantity'];
 $com=$_POST['company'];
 $cost=$_POST['cost'];
 $des=$_POST['description'];
-$exp=$POST['expiry_date'];
+$exp=date('Y-m-d',$_POST['expiry_date']);
 
-$sql=mysqli_query($con,"INSERT INTO VALUES('$sid',$sname','$qua','$com','$cost','$des','$exp');");
+$sql=mysqli_query($con,"INSERT INTO STOCK VALUES('$sid',$sname','$qua','$com','$cost','$des','$exp');");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/stock.php");
 }else{
-$message1="<font color=red>Registration Failed, Try again</font>";
+$message1="<font color=red>Adding Failed, Try again</font>";
+echo $message1;
 }
-	}
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,8 +34,6 @@ $message1="<font color=red>Registration Failed, Try again</font>";
 <link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
 <script src="js/function.js" type="text/javascript"></script>
 <script src="js/validation_script.js" type="text/javascript"></script>
-<style>#left-column {height: 477px;}
- #main {height: 477px;}</style>
 </head>
 <body>
 <div id="content">
@@ -104,7 +103,7 @@ $message1="<font color=red>Registration Failed, Try again</font>";
 			  ?>
 			<form name="myform" onsubmit="return validateForm(this);" action="stock.php" method="post" >
 			<table width="220" height="106" border="0" >
-				<tr><td align="center"><input name="stock_id" type="text" style="width:170px" placeholder="Drug Name" required="required" id="stock_id" /></td></tr>
+				<tr><td align="center"><input name="stock_id" type="text" style="width:170px" placeholder="Stock ID" required="required" id="stock_id" /></td></tr>
 				<tr><td align="center"><input name="drug" type="text" style="width:170px" placeholder="Drug Name" required="required" id="drug" /></td></tr>
 				<tr><td align="center"><input name="quantity" type="text" style="width:170px" placeholder="Quantity" required="required" id="quantity" /></td></tr>
 				<tr><td align="center"><input name="company" type="text" style="width:170px" placeholder="Manufacturing Company"  required="required" id="company" /></td></tr>  
