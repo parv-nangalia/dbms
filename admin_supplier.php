@@ -38,7 +38,7 @@ echo $message1;
 <!DOCTYPE html>
 <html>
 <head>
-<title><?php echo $username;?></title>
+<title>PESU PHARMA</title>
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
 <link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
@@ -148,7 +148,7 @@ return false;
         // display data in table
         
         echo "<table border='1' cellpadding='5' align='center'>";
-        echo "<tr> <th>ID</th><th>Name </th> <th>Phone </th> <th>Username </th><th>Update </th><th>Delete</th></tr>";
+        echo "<tr> <th>ID</th><th>Name </th> <th>Phone </th> <th>Username </th><th>Delete</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -161,8 +161,8 @@ return false;
 				echo '<td>' . $row['supplier_phone'] . '</td>';
 				echo '<td>' . $row['username'] . '</td>';
 				?>
-				<td><a href="update_supplier.php?username=<?php echo $row['username']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td>
-				<td><a href="delete_supplier.php?Supplier_id=<?php echo $row['supplier_id']?>"><img src="images/delete-icon.jpg" width="35" height="35" border="0" /></a></td>
+				<!--<td><a href="update_supplier.php?supplier_id=<?php echo $row['supplier_id']?>"><img src="images/update-icon.png" width="30" height="30" border="0" /></a></td> -->
+				<td><a href="delete_supplier.php?Supplier_id=<?php echo $row['supplier_id']?>"><img src="images/delete-icon.jpg" width="30" height="30" border="0" /></a></td>
 				<?php
 		 } 
         // close table>

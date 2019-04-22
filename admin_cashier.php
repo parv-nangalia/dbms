@@ -36,7 +36,7 @@ echo $message1;
 <!DOCTYPE html>
 <html>
 <head>
-<title><?php echo $username;?>PHARMACY</title>
+<title>PESU PHARMA</title>
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
 <link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
@@ -122,8 +122,8 @@ return false;
 	
       
         <ul class="tabs">  
-            <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">View User</a></li>  
-            <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Add User</a></li>  
+            <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">View Cashier</a></li>  
+            <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Add Cashier</a></li>  
               
         </ul>  
           
@@ -146,7 +146,7 @@ return false;
         // display data in table
         
         echo "<table border='1' cellpadding='5' align='center'>";
-        echo "<tr> <th>ID</th><th>Firstname </th> <th>Lastname </th> <th>Username </th><th>Update </th><th>Delete</th></tr>";
+        echo "<tr> <th>ID</th><th>Firstname </th> <th>Lastname </th> <th>Username </th><th>Delete</th></tr>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -158,7 +158,7 @@ return false;
 				echo '<td>' . $row['cashier_phone'] . '</td>';
 				echo '<td>' . $row['username'] . '</td>';
 				?>
-				<td><a href="update_cashier.php?username=<?php echo $row['username']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td>
+<!--				<td><a href="update_cashier.php?cashier_id=<?php echo $row['cashier_id']?>"><img src="images/update-icon.png" width="35" height="35" border="0" /></a></td> -->
 				<td><a href="delete_cashier.php?cashier_id=<?php echo $row['cashier_id']?>"><img src="images/delete-icon.jpg" width="35" height="35" border="0" /></a></td>
 				<?php
 		} 

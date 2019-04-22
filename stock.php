@@ -27,7 +27,7 @@ $message1="<font color=red>Registration Failed, Try again</font>";
 <!DOCTYPE html>
 <html>
 <head>
-<title><?php echo $user;?>PHARMACY</title>
+<title>PESU PHARMA</title>
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
 <link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
@@ -59,7 +59,7 @@ $message1="<font color=red>Registration Failed, Try again</font>";
       
         <ul class="tabs">  
             <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">View Stock</a></li>  
-            <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Add Medicine</a></li>  
+            <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Add Stock</a></li>  
              
         </ul>  
           

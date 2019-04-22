@@ -9,20 +9,20 @@ header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/
 exit();
 }
 if(isset($_POST['submit'])){
-$fname=$_POST['first_name'];
-$lname=$_POST['last_name'];
-$sid=$_POST['staff_id'];
-$postal=$_POST['postal_address'];
-$phone=$_POST['phone'];
-$email=$_POST['email'];
-$username=$_POST['username'];
-$pas=$_POST['password'];
+	$name=$_POST['cashier_name'];
+	if (!preg_match("/^[a-zA-Z ]*$/",name))
+	  {
+	  $nameErr = "Only letters and white space allowed";
+	  }
+	$sex=$_POST['cashier_sex'];
+	$phone=$_POST['cashier_phone'];
+	$id=$_POST['admin_id'];
  
 // get value of id that sent from address bar
-$user=$_POST['user'];
+$cid=$_POST['cashier_name'];
 
 // Retrieve data from database 
-$sql="UPDATE cashier SET first_name='$fname', last_name='$lname', staff_id='$sid',postal_address='$postal',phone='$phone',email='$email',username='$username', password='$pas' WHERE username='$username'";
+$sql="UPDATE CASHIER SET cashier_name='$lname', cashier_id='$cid',phone='$phone',username='$username', password='$pas' WHERE username='$username'";
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/admin.php");
 }else{
 $message1="<font color=red>Update Failed, Try again</font>";
@@ -31,7 +31,7 @@ $message1="<font color=red>Update Failed, Try again</font>";
 <!DOCTYPE html>
 <html>
 <head>
-<title><?php echo $user;?> -Pharmacy Sys</title>
+<title><?php echo $user;?></title>
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
 <script src="js/function.js" type="text/javascript"></script>
@@ -64,13 +64,12 @@ $message1="<font color=red>Update Failed, Try again</font>";
             <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">Update User</a></li>  
               
         </ul>  
-          
-        <div id="content_1" class="content">  
+
+        <div id="content_1" class="content">
 		<?php echo $message1;?>
           <form name="myform" onsubmit="return validateForm(this);" action="update_cashier.php" method="post" >
 			<table width="420" height="106" border="0" >	
-				<tr><td align="center"><input name="first_name" type="text" style="width:170px" placeholder="First Name" value="<?php include_once('connect_db.php'); echo $_GET['first_name']?>" id="first_name" /></td></tr>
-				<tr><td align="center"><input name="last_name" type="text" style="width:170px" placeholder="Last Name" id="last_name" value="<?php include_once('connect_db.php'); echo $_GET['last_name']?>" /></td></tr>
+				<tr><td align="center"><input name="cashier_name" type="text" style="width:170px" placeholder="Name" id="cashier_name" value="<?php include_once('connect_db.php'); echo $_GET['last_name']?>" /></td></tr>
 				<tr><td align="center"><input name="staff_id" type="text" style="width:170px" placeholder="Staff ID" id="staff_id" value="<?php include_once('connect_db.php'); echo $_GET['staff_id']?>" /></td></tr>  
 				<tr><td align="center"><input name="postal_address" type="text" style="width:170px" placeholder="Address" id="postal_address" value="<?php include_once('connect_db.php'); echo $_GET['postal_address']?>" /></td></tr>  
 				<tr><td align="center"><input name="phone" type="text" style="width:170px" placeholder="Phone" id="phone" value="<?php include_once('connect_db.php'); echo $_GET['phone']?>" /></td></tr>  

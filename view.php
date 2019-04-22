@@ -2,11 +2,9 @@
 session_start();
 include_once('connect_db.php');
 if(isset($_SESSION['username'])){
-$id=$_SESSION['manager_id'];
-$fname=$_SESSION['first_name'];
-$lname=$_SESSION['last_name'];
-$sid=$_SESSION['staff_id'];
 $user=$_SESSION['username'];
+$id=$_SESSION['cashier_id'];
+$name=$_SESSION['cashier_name'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
 exit();
@@ -15,7 +13,7 @@ exit();
 <!DOCTYPE html>
 <html>
 <head>
-<title><?php $user?> Pharmacy Sys</title>
+<title><?php $user?>PESU Pharma</title>
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
 <link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
