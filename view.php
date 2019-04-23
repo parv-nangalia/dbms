@@ -33,7 +33,7 @@ exit();
 <script type="text/javascript">
  $(document).ready(function() {
     $('#table1').DataTable( {
-        "lengthMenu": [[6,10, 25, 50, -1], [6,10, 25, 50, "All"]]
+        "lengthMenu": [[7], [7]]
     } );
 } );
   </script>
@@ -47,21 +47,19 @@ exit();
         <div id="left_column">
             <div id="button">
 		        <ul>
-                    <li><a href="cashier1.php">Dashboard</a></li>
-                    <li><a href="view.php">View Users</a></li>
-                    <li><a href="view_prescription.php">View Prescription</a></li>
-                    <li><a href="invoice.php">Create Invoice</a></li>
-                    <li><a href="logout.php">Logout</a></li>
+                <li><a href="cashier1.php">Dashboard</a></li>
+			<li><a href="view.php">Customer</a></li>
+			<li><a href="view_prescription.php">Prescription</a></li>
+			<li><a href="invoice.php">Invoice</a></li>
+			<li><a href="logout.php">Logout</a></li>
                 </ul>	
             </div>
         </div>
         <div id="main">
             <div id="tabbed_box" class="tabbed_box">  
-                <h4>View users</h4> 
-                <hr/>	
                 <div class="tabbed_area">  
                     <ul class="tabs">
-                        <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">Users</a></li>  
+                        <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">View Customers</a></li>  
                     </ul>  
                     <div id="content_1" class="content">  
                         <?php
@@ -75,16 +73,16 @@ exit();
                                 $result = mysqli_query($con,"SELECT * FROM CUSTOMER")or die(mysqli_error($con));
                                 // display data in table
                                 echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-                                echo "<thead><tr><th>First Name</th><th>Last Name </th><th>Email</th><th>Phone</th></tr></thead>";
+                                echo "<thead><tr><th>First Name</th><th>Email</th><th>Phone</th><th>Address</th></tr></thead>";
                                 // loop through results of database query, displaying them in the table
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array( $result )) {
                                         // echo out the contents of each row into a table
                                         echo "<tr>";
                                         echo '<td>' . $row['cust_fname'] . '</td>';
-                                        echo '<td>' . $row['cust_lname'] . '</td>';
                                         echo '<td>' . $row['cust_email_id'] . '</td>';
                                         echo '<td>' . $row['cust_phone_no'] . '</td>';
+                                        echo '<td>' . $row['cust_address'] . '</td>';
                                         echo "</tr>";
                                     } 
                                 // close table>

@@ -1,190 +1,104 @@
 <?php
-require_once('tcpdf/config/lang/eng.php');
-require_once('tcpdf/tcpdf.php');
-include('connect_db.php');
 session_start();
-$c_id=$_SESSION['custId'];
-$cname=$_SESSION['custName'];
-$age=$_SESSION['age'];
-$sex=$_SESSION['sex'];
-$postal=$_SESSION['postal_address'];
-$phone=$_SESSION['phone'];
-$quantity=$_SESSION['quantity'];
-$t=time("r");
+include_once('connect_db.php');
+if(isset($_SESSION['username'])){
 $user=$_SESSION['username'];
-$time=date("l\, F d Y\, h:i:s A", $t);
-$invoiceNo=$_SESSION['invoice'];
-		
-$getPresid=mysqli_query($con,"SELECT 1+MAX(prescription_id) FROM prescription");
-$presId=mysqli_fetch_array($getPresid);
-		if($presId[0]=='')
-		{$presIdd=999; }
-		else{$presIdd=$presId[0];}
-	
-	$sqlP=mysqli_query($con,"INSERT INTO prescription(prescription_id,customer_id,customer_name,age,sex,postal_address,invoice_id,phone)
-				VALUES('{$presIdd}','{$c_id}','{$cname}','{$age}','{$sex}','{$postal}','{$invoiceNo}','{$phone}')  ");
-		$sqlI=mysqli_query($con,"INSERT INTO invoice(invoice_id, customer_name,served_by,status)
-				VALUES('{$invoiceNo}','{$cname}','{$user}','Pending') ");
-						
-$getDetails=mysqli_query($con,"SELECT * FROM tempprescri WHERE customer_id='{$c_id}'");
-while($item1=mysqli_fetch_array($getDetails))
-			{	
-				$getDetails1=mysqli_query($con,"SELECT stock_id, cost FROM stock WHERE drug_name='{$item1['drug_name']}'");	
-			
-				$details=mysqli_fetch_array($getDetails1);
-				$sqlId=mysqli_query($con,"INSERT INTO invoice_details(invoice,drug,cost,quantity)
-				VALUES('{$invoiceNo}','{$details['stock_id']}','{$details['cost']}','{$item1['quantity']}')");
-				$count[]=$details['cost']*$item1['quantity'];
-		//	echo $invoiceNo."details".$details['stock_id']."-".$details['cost']."-".$item1['quantity'];
-			/*
-				
-				$sqlIp="INSERT INTO prescription_details(pres_id,drug_name,strength,dose,quantity)
-				VALUES('{$presIdd}','{$details['stock_id']}','{$item1['strength']}','{$item1['dose']}','{$item1['quantity']}') ";
-				echo $sqlIp ."<br>";
-				
-				*/
-			}
-			$tot=array_sum($count);
-			$file=fopen("receipts/docs/".$c_id.".txt", "a+");
-	fwrite($file, "TOTAL;;;;;".$tot."\n");
-	fclose($file);
-		$getDetails=mysqli_query($con,"SELECT * FROM tempprescri WHERE customer_id='{$c_id}'");
-while($item12=mysqli_fetch_array($getDetails))
-			{	
-			$getDetails12=mysqli_query($con,"SELECT stock_id, cost FROM stock WHERE drug_name='{$item12['drug_name']}'");	
-			
-				$details2=mysqli_fetch_array($getDetails12);
-			$sqlIp=mysqli_query($con,"INSERT INTO prescription_details(pres_id,drug_name,strength,dose,quantity)
-				VALUES('{$presIdd}','{$details2['stock_id']}','{$item12['strength']}','{$item12['dose']}','{$item12['quantity']}') ");	
-					
-			}
-		$sqlD=mysqli_query($con,"DELETE FROM tempprescri WHERE customer_id='{$c_id}' ");
-				
-	
-	//select all from temp prescri where cust/Id =$c_id
-	 
-class MYPDF extends TCPDF {
-
-	// Load table data from file
-	public function LoadData($file) {
-		// Read file lines
-		$lines = file($file);
-		$data = array();
-		foreach($lines as $line) {
-			$data[] = explode(';', chop($line));
-		}
-		return $data;
-	}
-
-	// Colored table
-	public function ColoredTable($header,$data) {
-		// Colors, line width and bold font
-		$this->SetFillColor(255, 255, 255);
-		$this->SetTextColor(0);
-		$this->SetDrawColor(255, 255,255);
-		$this->SetLineWidth(0);
-		$this->SetFont('', 'B');
-		// Header
-		$w = array(30,15,9,15,15,15);
-		$num_headers = count($header);
-		for($i = 0; $i < $num_headers; ++$i) {
-			$this->Cell($w[$i], 5, $header[$i], 1, 0, 'L', 1);
-		}
-		$this->Ln();
-		// Color and font restoration
-		$this->SetFillColor(255, 255, 255);
-		$this->SetTextColor(0);
-		$this->SetFont('');
-		// Data
-		$fill = 0;
-		foreach($data as $row) {
-			$this->Cell($w[0], 4, $row[0], 'LR', 0, 'L', $fill);
-					
-			$this->Cell($w[1], 4, $row[1], 'LR', 0, 'L', $fill);
-			$this->Cell($w[2], 4, $row[2], 'LR', 0, 'L', $fill);
-			$this->Cell($w[3], 4, $row[3], 'LR', 0, 'R', $fill);
-			$this->Cell($w[4], 4, number_format($row[4],2), 'LR', 0, 'R', $fill);
-			$this->Cell($w[5], 4, number_format($row[5],2), 'LR', 0, 'R', $fill);
-			$this->Ln();
-			$fill=!$fill;
-		}
-		$this->Cell(array_sum($w), 0, '', 'T');
-	}
-	
+$id=$_SESSION['cashier_id'];
+$name=$_SESSION['cashier_name'];
+}else{
+header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
+exit();
 }
-
-
-$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_INVOICE_FORMAT, true, 'UTF-8', false);
-
-
-$pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Pharm Syst');
-$pdf->SetTitle('Invoice');
-$pdf->SetSubject('Payment');
-$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-//$pdf->SetHeaderData(PDF_RECEIPT_LOGO, PDF_RECEIPT_LOGO_WIDTH, PDF_RECEIPT_TITLE, PDF_HEADER_STRING, array(0,0,0), array(0,0,0));
-//$pdf->setHeaderFont(Array(PDF_FONT_NAME_RECEIPT, '', PDF_FONT_SIZE_RECEIPT));
-//$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-$pdf->setPrintHeader(false);
-$pdf->setPrintFooter(false);
-
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-
-$pdf->SetMargins(PDF_INVOICE_LEFT, PDF_INVOICE_TOP, PDF_INVOICE_RIGHT);
-$pdf->SetHeaderMargin(PDF_INVOICE_HEADER);
-$pdf->SetFooterMargin(PDF_INVOICE_FOOTER);
-
-
-$pdf->SetAutoPageBreak(TRUE, PDF_INVOICE_BOTTOM);
-
-
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-
-$pdf->setLanguageArray($l);
-
-
-$pdf->SetFont('times', '', 10, '', true);
-
-
-$pdf->AddPage();
-$spacing = -0.01;
-$stretching = 75;
-$pdf->setFontStretching($stretching);
-				$pdf->setFontSpacing($spacing);
-$titling= <<<EOD
-<strong> <font style="font-size:11">Pharmacy Sys</font> </strong> <br>
-Student Center Ground Floor,<br> P.O. Box Private Bag Kabarak, Kenya <br> Tel: +254 702 937 925 <br> E-mail: pharmacysys@yahoo.com <br>-----------------------------------------
-EOD;
-$header = array('Drug','Strength', 'Dose' ,'Quantity','Price', 'Total');
-$ddt=<<<EOD
-<strong>INVOICE N<sup>o</sup>:</strong> $invoiceNo  <br>
-$time   
-EOD;
-$html = <<<EOD
-<strong>Name: </strong> $cname <strong>ID N<sup>o</sup>: $c_id
-<br>-----------------------------------------
-EOD;
-
-
-$data = $pdf->LoadData('receipts/docs/'.$c_id.'.txt');
-$pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $titling, $border=0, $ln=1, $fill=0, $reseth=true, $align='C', $autopadding=true);
-$pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $ddt, $border=0, $ln=1, $fill=0, $reseth=true, $align='L', $autopadding=true);
-$pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='', $autopadding=true);
-
-$pdf->ColoredTable($header, $data);
-
-$pdf->SetY(-10);
-		
-		$pdf->Cell(0, 0, 'You were served by: '.strtoupper($user), 0, false, 'L', 0, '', 0, false, 'T', 'M');
-
-$pdf->Output('receipts/printouts/'.$cname.'-invoice.pdf','F');
-//unlink('receipts/docs/'.$c_id.'.txt');
-unset($_SESSION['custId'], $_SESSION['custName'], $_SESSION['age'], $_SESSION['sex'], $_SESSION['postal_address'], $_SESSION['phone']);
-header('Location: prescription.php');
-exit;
-
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+<title><?php $user?>PHARMACY</title>
+<link rel="stylesheet" type="text/css" href="style/mystyle.css">
+<link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
+<link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
+<link rel="stylesheet" href="style/bootstrap.min.css" type="text/css" /> 
+<link rel="stylesheet" href="style/jquery.dataTables.min.css" type="text/css" /> 
+
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- DATA TABES SCRIPT -->
+<script src="js/datatables/jquery.dataaTables.js" type="text/javascript"></script>
+<script src="js/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="js/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+    $('#table1').DataTable( {
+        "lengthMenu": [[6,10, 25, 50, -1], [6,10, 25, 50, "All"]]
+    } );
+} );
+  </script>
+<script src="js/function1.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<div id="header">
+<h1><a href="#"><img src="images/hd_logo.jpg"></a>  PESU PHARMA</h1></div>
+<div id="left_column">
+<div id="button">
+		<ul>
+			<li><a href="cashier1.php">Dashboard</a></li>
+			<li><a href="view.php">Customer</a></li>
+			<li><a href="view_prescription.php">Prescription</a></li>
+			<li><a href="invoice.php">Invoice</a></li>
+			<li><a href="logout.php">Logout</a></li>
+		</ul>	
+</div>
+</div>
+<div id="main">
+<div id="tabbed_box" class="tabbed_box">  
+    <div class="tabbed_area">  
+      
+        <ul class="tabs">  
+            <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">View Invoice </a></li>  
+                          
+        </ul>  
+          
+        <div id="content_1" class="content">  
+		<?php /*echo $message1;*/
+		/* 
+		View
+        Displays all data from 'Pharmacist' table
+		*/
+        // connect to the database
+        include_once('connect_db.php');
+       // get results from database
+       $result = mysqli_query($con,"SELECT * FROM BILL")or die(mysqli_error($con));
+		// display data in table
+        echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+        echo "<thead><tr> <th>Invoice ID</th><th>Supplier Name</th><th>Amount</th><th>Address</th><th>Date</th></tr></thead>";
+        // loop through results of database query, displaying them in the table
+        echo "<tbody>";
+        while($row = mysqli_fetch_array( $result )) {
+                // echo out the contents of each row into a table
+                echo "<tr>";
+                echo '<td>' . $row['invoice_no'] . '</td>';
+                echo '<td>' . $row['suppl_id'] . '</td>';
+				echo '<td>' . $row['cost'] . '</td>';
+                echo '<td>' . $row['address'] . '</td>';
+                echo '<td>' . $row['bill_date'] . '</td>';
+				
+				?>				
+				<?php
+		}
+        // close table>
+        echo "</tbody></table>";
+?> 
+        </div>  
+
+    </div>  
+</div>
+</div>
+<div id="footer" align="Center"> PESU PHARMA - 2019</div>
+</div>
+</body>
+</html>

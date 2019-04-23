@@ -17,20 +17,6 @@ header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/
 $message="<font color=red>Invalid login Try Again</font>";
 }
 break;
-case 'Supplier':
-$result=mysqli_query($con,"SELECT supplier_id, supplier_name,supplier_id,username FROM SUPPLIER WHERE username='$username' AND password='$password'");
-$row=mysqli_fetch_array($result);
-if($row>0){
-session_start();
-$_SESSION['supplier_id']=$row[0];
-$_SESSION['supplier_name']=$row[1];
-$_SESSION['supplier_id']=$row[2];
-$_SESSION['username']=$row[3];
-header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/pharmacist.php");
-}else{
-$message="<font color=red>Invalid login Try Again</font>";
-}
-break;
 case 'Cashier':
 $result=mysqli_query($con,"SELECT cashier_id,cashier_name FROM CASHIER WHERE username='$username' AND password='$password'");
 $row=mysqli_fetch_array($result);
@@ -43,20 +29,6 @@ header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/
 }else{
 $message="<font color=red>Invalid login Try Again</font>";
 echo $message;
-}
-break;
-case 'Customer':
-$result=mysqli_query($con,"SELECT cust_id, cust_fname,cust_lname,username FROM CUSTOMER WHERE username='$username' AND password='$password'");
-$row=mysqli_fetch_array($result);
-if($row>0){
-session_start();
-$_SESSION['cust_id']=$row[0];
-$_SESSION['cust_fname']=$row[1];
-$_SESSION['cust_lname']=$row[2];
-$_SESSION['username']=$row[3];
-header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/customer.php");
-}else{
-$message="<font color=red>Invalid login Try Again</font>";
 }
 break;
 }}
@@ -92,9 +64,7 @@ height: auto;}
 		<p><select name="position">
 		<option>--Select position--</option>
 			<option>Admin</option>
-			<option>Supplier</option>
 			<option>Cashier</option>
-			<option>Customer</option>
 			</select></p>
         <p class="submit"><input type="submit" name="submit" value="Login"></p>
       </form>

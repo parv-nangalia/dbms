@@ -27,9 +27,9 @@ exit();
 <div id="button">
 <ul>
 			<li><a href="cashier1.php">Dashboard</a></li>
-			<li><a href="view.php">View Users</a></li>
-			<li><a href="view_prescription.php">View Prescription</a></li>
-			<li><a href="invoice.php">Create Invoice</a></li>
+			<li><a href="view.php">Customer</a></li>
+			<li><a href="view_prescription.php">Prescription</a></li>
+			<li><a href="invoice.php">Invoice</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>
 </div>
@@ -38,15 +38,15 @@ exit();
         <div class="grid_7">
 				<a href="view.php" class="dashboard-module">
                 	<img src="images/patients_1.png"  width="100" height="100" alt="edit" />
-                	<span>View Users</span>
+                	<span>Customer</span>
                 </a>
 				<a href="view_prescription.php" class="dashboard-module">
                 	<img src="images/prescri.jpg" width="100" height="100" alt="edit" />
-                	<span>View Prescription</span>
+                	<span>Prescription</span>
 				</a>
                 <a href="invoice.php" class="dashboard-module">
                     <img src="images/Invoice.png"  width="100" height="100" alt="edit" />
-                    <span>Create Invoices</span>
+                    <span>Invoice</span>
                 </a>
         </div>
 </div>

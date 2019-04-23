@@ -39,7 +39,27 @@ echo $message1;
 <title>PESU PHARMA</title>
 <link rel="stylesheet" type="text/css" href="style/mystyle.css">
 <link rel="stylesheet" href="style/style.css" type="text/css" media="screen" /> 
-<link rel="stylesheet" href="style/table.css" type="text/css" media="screen" /> 
+<link rel="stylesheet" href="style/table.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="style/bootstrap.min.css" type="text/css" /> 
+<link rel="stylesheet" href="style/jquery.dataTables.min.css" type="text/css" /> 
+
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- DATA TABES SCRIPT -->
+<script src="js/datatables/jquery.dataaTables.js" type="text/javascript"></script>
+<script src="js/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="js/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+    $('#table1').DataTable( {
+        "lengthMenu": [[7], [7]]
+    } );
+} );
+  </script> 
 <script src="js/function.js" type="text/javascript"></script>
 <script src="js/validation_script.js" type="text/javascript"></script>
 <!--<script>
@@ -112,8 +132,6 @@ return false;
 </div>
 <div id="main">
 <div id="tabbed_box" class="tabbed_box">  
-    <h4>Manage Cashier</h4> 
-<hr/>
     <div class="tabbed_area">  
 	
       
@@ -141,8 +159,8 @@ return false;
 					    
         // display data in table
         
-        echo "<table border='1' cellpadding='5' align='center'>";
-        echo "<tr> <th>ID</th><th>Firstname </th> <th>Lastname </th> <th>Username </th><th>Delete</th></tr>";
+		echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+        echo "<thead><tr> <th>ID</th><th>Firstname </th> <th>Lastname </th> <th>Username </th><th>Delete</th></tr></thead><tbody>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -159,7 +177,7 @@ return false;
 				<?php
 		} 
         // close table>
-        echo "</table>";
+        echo "</tbody></table>";
 ?> 
         </div>  
         <div id="content_2" class="content">  
