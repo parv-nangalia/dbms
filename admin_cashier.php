@@ -10,22 +10,16 @@ exit();
 }
 if(isset($_POST['submit'])){
 $name=$_POST['cashier_name'];
-if (!preg_match("/^[a-zA-Z ]*$/",name))
-  {
-  $nameErr = "Only letters and white space allowed";
-  }
-$cid = $_POST['cashier_id'];
 $sex=$_POST['cashier_sex'];
 $phone=$_POST['cashier_phone'];
-$user=$_POST['username'];
-$pas=$_POST['password'];
-$id=$_POST['admin_id'];
+$pas=$name+"123";
 $sql1=mysqli_query($con,"SELECT * FROM CASHIER WHERE username='$user'")or die(mysqli_error($con));
  $result=mysqli_fetch_array($sql1);
  if($result>0){
 $message="<font color=blue>sorry the username entered already exists</font>";
  }else{
-$sql=mysqli_query($con,"INSERT INTO CASHIER VALUES('$id','$name','$sex','$phone','$user','$pas','$cid');");
+$sql=mysqli_query($con,"INSERT INTO CASHIER(`cashier_name`,`cashier_sex`,`cashier_phone`,`username`,`password`,`admin_id`)
+ VALUES('$name','$sex','$phone','$name','$pas','$id');");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/admin_cashier.php");
 }else{
 $message1="<font color=red>Registration Failed, Try again</font>";
@@ -143,24 +137,19 @@ return false;
           
         <div id="content_1" class="content">  
 		<?php 
-		/* 
-		View
-        Displays all data from 'Cashier' table
-		*/
-
         // connect to the database
         include_once('connect_db.php');
 
         // get results from database
 		
-        $result = mysqli_query($con,"SELECT * FROM CASHIER") 
+        $result = mysqli_query($con,"SELECT cashier_id,cashier_name,cashier_phone,CASHIER.username FROM CASHIER,ADMINISTRATOR WHERE CASHIER.admin_id = ADMINISTRATOR.admin_id AND ADMINISTRATOR.admin_id = $id;") 
                 or die(mysqli_error($con));
 				
 					    
         // display data in table
         
 		echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-        echo "<thead><tr> <th>ID</th><th>Firstname </th> <th>Lastname </th> <th>Username </th><th>Delete</th></tr></thead><tbody>";
+        echo "<thead><tr><th>ID</th><th>Name </th> <th>Phone </th> <th>Username </th><th>Delete</th></tr></thead><tbody>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -185,18 +174,12 @@ return false;
 		<?php /*echo $message;
 			  echo $message1;*/
 			  ?>
-		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="admin_cashier.php" method="post" >
-			<table width="220" height="106" border="0" >	
-				<tr><td align="center"><input name="cashier_id" type="text" style="width:170px" placeholder="ID" required="required"  id="cashier_id" /></td></tr>
-				<tr><td align="center"><input name="cashier_name" type="text" style="width:170px" placeholder="First Name" required="required"  id="cashier_name" /></td></tr>
-				<tr><td align="center"><input name="cashier_sex" type="text" style="width:170px" placeholder="Sex" required="required" id="cashier_sex" /></td></tr>  
-				<tr><td align="center"><input name="cashier_phone" type="text" style="width:170px"placeholder="Phone"  required="required" id="cashier_phone" /></td></tr>   
-				<tr><td align="center"><input name="username" type="text" style="width:170px" placeholder="Username" required="required" id="username" /></td></tr>
-				<tr><td align="center"><input name="password" type="password" style="width:170px" placeholder="Password" required="required" id="password"/></td></tr>
-				<tr><td align="center"><input name="admin_id" type="text" style="width:170px" placeholder="Foreign Key (if any)" required="required" id="admin_id" /></td></tr>
-				<tr><td align="right"><input name="submit" type="submit" value="Submit"></td></tr>
-				
-            </table>
+		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="admin_cashier.php" method="post" ><pre>
+				Name:         <input name="cashier_name" type="text"  required="required"  id="cashier_name" /><br><br>
+				Gender:       <input name="cashier_sex" type="radio"  required="required" id="cashier_sex" value="M"/>Male
+				              <input name="cashier_sex" type="radio"  required="required" id="cashier_sex" value="F"/>Female<br><br>
+				Phone Number: <input name="cashier_phone" type="text" required="required" id="cashier_phone" /><br>
+				<input name="submit" type="submit" value="Submit"></pre>
 		</form>
         </div>   
         

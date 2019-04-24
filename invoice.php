@@ -4,7 +4,6 @@ include_once('connect_db.php');
 if(isset($_SESSION['username'])){
 $user=$_SESSION['username'];
 $id=$_SESSION['cashier_id'];
-$name=$_SESSION['cashier_name'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
 exit();
@@ -33,7 +32,7 @@ exit();
 <script type="text/javascript">
  $(document).ready(function() {
     $('#table1').DataTable( {
-        "lengthMenu": [[6,10, 25, 50, -1], [6,10, 25, 50, "All"]]
+        "lengthMenu": [[7], [7]]
     } );
 } );
   </script>
@@ -46,7 +45,8 @@ exit();
 <div id="left_column">
 <div id="button">
 		<ul>
-			<li><a href="cashier1.php">Dashboard</a></li>
+        <li><a href="cashier1.php">Dashboard</a></li>
+			<li><a href="new_order.php">New Order</a></li>
 			<li><a href="view.php">Customer</a></li>
 			<li><a href="view_prescription.php">Prescription</a></li>
 			<li><a href="invoice.php">Invoice</a></li>
@@ -72,19 +72,20 @@ exit();
         // connect to the database
         include_once('connect_db.php');
        // get results from database
-       $result = mysqli_query($con,"SELECT * FROM BILL")or die(mysqli_error($con));
+       $result = mysqli_query($con,"SELECT invoice_no,supplier_name,cust_fname,cost,cust_address,bill_date FROM BILL,CUSTOMER,SUPPLIER,CASHIER WHERE CASHIER.cashier_id = $id AND BILL.cashier_id = CASHIER.cashier_id AND BILL.cust_id = CUSTOMER.cust_id AND BILL.supplier_id = SUPPLIER.supplier_id")or die(mysqli_error($con));
 		// display data in table
         echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-        echo "<thead><tr> <th>Invoice ID</th><th>Supplier Name</th><th>Amount</th><th>Address</th><th>Date</th></tr></thead>";
+        echo "<thead><tr> <th>Invoice ID</th><th>Customer Name</th><th>Supplier Name</th><th>Amount</th><th>Address</th><th>Date</th></tr></thead>";
         // loop through results of database query, displaying them in the table
         echo "<tbody>";
         while($row = mysqli_fetch_array( $result )) {
                 // echo out the contents of each row into a table
                 echo "<tr>";
                 echo '<td>' . $row['invoice_no'] . '</td>';
-                echo '<td>' . $row['suppl_id'] . '</td>';
+                echo '<td>' . $row['cust_fname'] . '</td>';
+                echo '<td>' . $row['supplier_name'] . '</td>';
 				echo '<td>' . $row['cost'] . '</td>';
-                echo '<td>' . $row['address'] . '</td>';
+                echo '<td>' . $row['cust_address'] . '</td>';
                 echo '<td>' . $row['bill_date'] . '</td>';
 				
 				?>				

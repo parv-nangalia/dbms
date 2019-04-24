@@ -47,6 +47,7 @@ exit();
 <div id="button">
 		<ul>
         <li><a href="cashier1.php">Dashboard</a></li>
+			<li><a href="new_order.php">New Order</a></li>
 			<li><a href="view.php">Customer</a></li>
 			<li><a href="view_prescription.php">Prescription</a></li>
 			<li><a href="invoice.php">Invoice</a></li>
@@ -72,7 +73,7 @@ exit();
         // connect to the database
         include_once('connect_db.php');
        // get results from database
-       $result = mysqli_query($con,"SELECT * FROM PRESCRIPTION")or die(mysqli_error($con));
+       $result = mysqli_query($con,"SELECT prescription_id,cust_fname,drug,drug_quantity,order_date FROM PRESCRIPTION,CASHIER,CUSTOMER,STOCK WHERE STOCK.stock_id=PRESCRIPTION.stock_id AND PRESCRIPTION.cust_id = CUSTOMER.cust_id AND CASHIER.cashier_id = PRESCRIPTION.cashier_id and CASHIER.cashier_id=$id")or die(mysqli_error($con));
 		// display data in table
         echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
         echo "<thead><tr> <th>Prescription ID</th><th>Customer Name</th><th>Drug Name</th><th>Quantity</th><th>Date</th></tr></thead>";
@@ -82,8 +83,8 @@ exit();
                 // echo out the contents of each row into a table
                 echo "<tr>";
                 echo '<td>' . $row['prescription_id'] . '</td>';
-                echo '<td>' . $row['customer_name'] . '</td>';
-                echo '<td>' . $row['drug_name'] . '</td>';
+                echo '<td>' . $row['cust_fname'] . '</td>';
+                echo '<td>' . $row['drug'] . '</td>';
                 echo '<td>' . $row['drug_quantity'] . '</td>';
                 echo '<td>' . $row['order_date'] . '</td>';
 

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `ADMINISTRATOR` (
   `password`  VARCHAR(20) NOT NULL,
 
   PRIMARY KEY(`admin_id`),
-  CONSTRAINT gender_check CHECK admin_sex = 'M' OR admin_sex = 'F'
+  CONSTRAINT gender_constraint CHECK (admin_sex = 'M' OR admin_sex = 'F')
 );
 
 CREATE TABLE IF NOT EXISTS `STOCK`(
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `CASHIER` (
 
   PRIMARY KEY(`cashier_id`),
   FOREIGN KEY(`admin_id`)REFERENCES ADMINISTRATOR(`admin_id`),
-  CONSTRAINT gender_check CHECK cashier_sex = 'M' OR cashier_sex = 'F'
+  CONSTRAINT gender_constraint CHECK (cashier_sex = 'M' OR cashier_sex = 'F')
 );
 
 CREATE TABLE IF NOT EXISTS `SUPPLIER`(
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `SUPPLIER`(
 
   PRIMARY KEY(`supplier_id`),
   FOREIGN KEY(`admin_id`)REFERENCES ADMINISTRATOR(`admin_id`),
-  CONSTRAINT gender_check CHECK supplier_sex = 'M' OR supplier_sex = 'F'
+  CONSTRAINT gender_constraint CHECK (supplier_sex = 'M' OR supplier_sex = 'F')
 );
 
 CREATE TABLE IF NOT EXISTS `CUSTOMER`(
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `CUSTOMER`(
   `cust_address` VARCHAR(60) NOT NULL UNIQUE,
   
   PRIMARY KEY(`cust_id`),
-  CONSTRAINT gender_check CHECK cust_sex = 'M' OR cust_sex = 'F'
+  CONSTRAINT gender_constraint CHECK (cust_sex = 'M' OR cust_sex = 'F')
 );
 
 CREATE TABLE IF NOT EXISTS `PRESCRIPTION`(
@@ -74,9 +74,9 @@ CREATE TABLE IF NOT EXISTS `PRESCRIPTION`(
   `cashier_id` INT NOT NULL,
 
   PRIMARY KEY(`prescription_id`),
-  FOREIGN KEY(`cust_id`)REFERENCES CUSTOMER(`cust_id`),
-  FOREIGN KEY(`cashier_id`)REFERENCES CASHIER(`cashier_id`),
-  FOREIGN KEY(`stock_id`)REFERENCES STOCK(`stock_id`),
+  FOREIGN KEY(`cust_id`) REFERENCES CUSTOMER(`cust_id`),
+  FOREIGN KEY(`cashier_id`) REFERENCES CASHIER(`cashier_id`),
+  FOREIGN KEY(`stock_id`) REFERENCES STOCK(`stock_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `BILL` (
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `BILL` (
   `supplier_id` INT NOT NULL,
 
   PRIMARY KEY(`invoice_no`),
-  FOREIGN KEY(`address`)REFERENCES CUSTOMER(`cust_address`),
+  FOREIGN KEY(`cust_id`)REFERENCES CUSTOMER(`cust_id`),
   FOREIGN KEY(`cashier_id`)REFERENCES CASHIER(`cashier_id`),
   FOREIGN KEY(`supplier_id`)REFERENCES SUPPLIER(`supplier_id`)
 );
@@ -137,7 +137,7 @@ INSERT INTO `CUSTOMER`(`cust_fname`,`cust_lname`,`cust_email`,`cust_phone`,`cust
 ("Mary","Castillo","Mary21@gmail.com",989829568,"F","7934 Dalton Crossing Ashleymouth, PA 16384"),
 ("Barrett","Boden","Barrett31@gmail.com",875811535,"M","4027 Perkins Via Suite 382 West Johnmouth, MD 47755"),
 ("Araceli","Green","Araceli35@gmail.com",93534940,"F","925 Sandra Centers Suite 307 Lake Cheyennehaven, PA 74398"),
-("Gaynell","Martin","gaynell123","Gaynell36@gmail.com",947350396,"F","7057 Johnson Pines North Thomasview, WV 88668"),
+("Gaynell","Martin","Gaynell36@gmail.com",947350396,"F","7057 Johnson Pines North Thomasview, WV 88668"),
 ("Jeanette","Sacco","Jeanette31@gmail.com",852362061,"F","94935 Brett Trail Johnsonfurt, DC 70179"),
 ("Wayne","Gillam","Wayne33@gmail.com",947276126,"M","38915 Martinez Squares Port Melissa, MO 02852"),
 ("Terry","Davis","Terry33@gmail.com",8462454915,"M","7164 Kayla Street Port Tammy, IN 93040"),
@@ -155,7 +155,7 @@ INSERT INTO `CUSTOMER`(`cust_fname`,`cust_lname`,`cust_email`,`cust_phone`,`cust
 ("Christopher","Robinson","Christopher26@gmail.com",890691407,"M","35728 Crystal Place Suite 463 Lake Kyle, IA 23358"),
 ("Robert","Hazlett","Robert31@gmail.com",891657445,"M","244 Smith Parkways Port Carolinetown, HI 85674");
 
-INSERT INTO `PRESCRIPTION`(`order_date`,`drug_quantity`,`stock_id`,`cust_id`,`cashier_id`) VALUES
+INSERT INTO `PRESCRIPTION`(`order_date`,`stock_id`,`drug_quantity`,`cust_id`,`cashier_id`) VALUES
 ("2019-02-13",2,3,1,1),
 ("2019-03-21",4,7,2,1),
 ("2019-03-12",3,4,3,1),
@@ -167,7 +167,7 @@ INSERT INTO `PRESCRIPTION`(`order_date`,`drug_quantity`,`stock_id`,`cust_id`,`ca
 ("2019-02-24",4,10,9,1),
 ("2019-03-19",8,1,10,1),
 ("2019-02-15",6,3,11,1),
-("2019-02-15",8,2,12,1,
+("2019-02-15",8,2,12,1),
 ("2019-01-22",3,9,13,1),
 ("2019-01-28",3,5,14,1),
 ("2019-03-17",3,6,15,1),
@@ -188,28 +188,28 @@ INSERT INTO `PRESCRIPTION`(`order_date`,`drug_quantity`,`stock_id`,`cust_id`,`ca
 
 
 INSERT INTO `BILL`(`bill_date`,`cost`,`cust_id`,`cashier_id`,`supplier_id`) VALUES
-('2019-04-21',29,1,1,1);
-('2019-03-20',78,2,1,1);
-('2019-04-01',27,3,1,1);
-('2019-03-05',36,4,1,1);
-('2019-02-28',243,5,1,1);
-('2019-02-17',52,6,1,1);
-('2019-03-08',81,7,1,1);
-('2019-03-21',87,8,1,1);
-('2019-04-03',217,9,1,1);
-('2019-02-15',246,10,1,1);
-('2019-03-27',310,11,1,1);
-('2019-03-25',328,12,1,1);
-('2019-04-17',217,13,1,1);
-('2019-03-08',156,14,1,1);
-('2019-04-15',29,15,1,1);
-('2019-03-15',36,16,1,1);
-('2019-04-11',234,17,1,1);
-('2019-03-20',58,18,1,1);
-('2019-02-24',324,19,1,1);
-('2019-03-02',180,20,1,1);
-('2019-04-19',216,21,1,1);
-('2019-03-17',150,22,1,1);
-('2019-04-11',205,23,1,1);
-('2019-03-01',105,24,1,1);
+('2019-04-21',29,1,1,1),
+('2019-03-20',78,2,1,1),
+('2019-04-01',27,3,1,1),
+('2019-03-05',36,4,1,1),
+('2019-02-28',243,5,1,1),
+('2019-02-17',52,6,1,1),
+('2019-03-08',81,7,1,1),
+('2019-03-21',87,8,1,1),
+('2019-04-03',217,9,1,1),
+('2019-02-15',246,10,1,1),
+('2019-03-27',310,11,1,1),
+('2019-03-25',328,12,1,1),
+('2019-04-17',217,13,1,1),
+('2019-03-08',156,14,1,1),
+('2019-04-15',29,15,1,1),
+('2019-03-15',36,16,1,1),
+('2019-04-11',234,17,1,1),
+('2019-03-20',58,18,1,1),
+('2019-02-24',324,19,1,1),
+('2019-03-02',180,20,1,1),
+('2019-04-19',216,21,1,1),
+('2019-03-17',150,22,1,1),
+('2019-04-11',205,23,1,1),
+('2019-03-01',105,24,1,1),
 ('2019-04-11',36,25,1,1);

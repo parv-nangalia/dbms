@@ -18,13 +18,12 @@ $message="<font color=red>Invalid login Try Again</font>";
 }
 break;
 case 'Cashier':
-$result=mysqli_query($con,"SELECT cashier_id,cashier_name FROM CASHIER WHERE username='$username' AND password='$password'");
+$result=mysqli_query($con,"SELECT cashier_id,username FROM CASHIER WHERE username='$username' AND password='$password'");
 $row=mysqli_fetch_array($result);
 if($row>0){
 session_start();
-$_SESSION['username']=$username;
+$_SESSION['username']=$row[1];
 $_SESSION['cashier_id']=$row[0];
-$_SESSION['cashier_name']=$row[1];
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/cashier1.php");
 }else{
 $message="<font color=red>Invalid login Try Again</font>";

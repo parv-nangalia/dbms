@@ -50,7 +50,7 @@ exit();
                 </a>
 
                 <a href="admin_supplier.php" class="dashboard-module">
-                	<img src="images/pharmacist_icon.jpg"  width="100" height="100" alt="edit" />
+                	<img src="images/supplier_icon.jpg"  width="100" height="100" alt="edit" />
                 	<span>Supplier</span>
                 </a>
 			</div>

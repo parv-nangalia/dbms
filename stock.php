@@ -9,15 +9,14 @@ header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."i
 exit();
 }
 if(isset($_POST['submit'])){
-$sid=$_POST['stock_id'];
 $sname=$_POST['drug'];
 $qua=$_POST['quantity'];
 $com=$_POST['company'];
 $cost=$_POST['cost'];
 $des=$_POST['description'];
-$exp=date('Y-m-d',$_POST['expiry_date']);
-
-$sql=mysqli_query($con,"INSERT INTO STOCK VALUES('$sid',$sname','$qua','$com','$cost','$des','$exp');");
+$exp=date('Y-m-d',strtotime($_POST['expiry_date']));
+$sql=mysqli_query($con,"INSERT INTO STOCK(`drug`,`quantity`,`company`,`cost`,`description`,`expiry_date`,`admin_id`)
+VALUES('$sname','$qua','$com','$cost','$des','$exp','$id');");
 if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/stock.php");
 }else{
 $message1="<font color=red>Adding Failed, Try again</font>";
@@ -92,11 +91,11 @@ echo $message1;
 
         // get results from database
 		
-        $result = mysqli_query($con,"SELECT * FROM STOCK") 
+        $result = mysqli_query($con,"SELECT * FROM STOCK,ADMINISTRATOR WHERE STOCK.admin_id = $id")
                 or die(mysqli_error($con));
 		// display data in table
         echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
-         echo "<thead><tr><th>ID</th><th>Name</th><th>Company</th><th>Expiry Date</th><th>Delete</th></tr></thead><tbody>";
+         echo "<thead><tr><th>ID</th><th>Name</th><th>Quantity</th><th>Company</th><th>Expiry Date</th><th>Delete</th></tr></thead><tbody>";
 
         // loop through results of database query, displaying them in the table
         while($row = mysqli_fetch_array( $result )) {
@@ -105,31 +104,25 @@ echo $message1;
                 echo "<tr>";
                  echo '<td>' . $row['stock_id'] . '</td>';               
                 echo '<td>' . $row['drug'] . '</td>';
+                 echo '<td>' . $row['quantity'] . '</td>';               
 				echo '<td>' . $row['company'] . '</td>';
 				echo '<td>' . $row['expiry_date'] . '</td>';?>
 				<td><a href="delete_stock.php?stock_id=<?php echo $row['stock_id']?>"><img src="images/delete-icon.jpg" width="24" height="24" border="0" /></a></td>
 				<?php
-		 } 
+		 }
         // close table>
         echo "</tbody></table>";
 ?>
         </div>  
         <div id="content_2" class="content">
-         <!--Add Drug-->
-		 <?php /*echo $message;
-			  echo $message1;*/
-			  ?>
-			<form name="myform" onsubmit="return validateForm(this);" action="stock.php" method="post" >
-			<table width="220" height="106" border="0" >
-				<tr><td align="center"><input name="stock_id" type="text" style="width:170px" placeholder="Stock ID" required="required" id="stock_id" /></td></tr>
-				<tr><td align="center"><input name="drug" type="text" style="width:170px" placeholder="Drug Name" required="required" id="drug" /></td></tr>
-				<tr><td align="center"><input name="quantity" type="text" style="width:170px" placeholder="Quantity" required="required" id="quantity" /></td></tr>
-				<tr><td align="center"><input name="company" type="text" style="width:170px" placeholder="Manufacturing Company"  required="required" id="company" /></td></tr>  
-				<tr><td align="center"><input name="cost" type="text" style="width:170px" placeholder="Unit Cost" required="required" id="cost" /></td></tr>
-				<tr><td align="center"><input name="description" type="text" style="width:170px" placeholder="Description" required="required" id="description" /></td></tr>
-				<tr><td align="center"><input name="expiry_date" type="Date" style="width:170px" placeholder="Expiry Date" required="required" id="expiry_date" /></td></tr>  
-				<tr><td align="center"><input name="submit" type="submit" value="Submit" id="submit"/></td></tr>
-            </table>
+			<form name="myform" onsubmit="return validateForm(this);" action="stock.php" method="post" ><pre>
+            Drug Name:    <input name="drug" type="text" style="width:170px" required="required" id="drug" /><br><br>
+            Quantity:     <input name="quantity" type="text" style="width:170px"  required="required" id="quantity" /><br><br>
+            Company Name: <input name="company" type="text" style="width:170px"   required="required" id="company" /><br><br>  
+            Cost:         <input name="cost" type="text" style="width:170px"  required="required" id="cost" /><br><br>
+            Description:  <input name="description" type="text" style="width:170px" required="required" id="description" /><br><br>
+            Expiry Date:  <input name="expiry_date" type="Date" style="width:170px" required="required" id="expiry_date" /><br><br>
+            <input name="submit" type="submit" value="Submit" id="submit"/></pre>
 		</form>
         </div>  
               

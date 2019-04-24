@@ -4,7 +4,6 @@ include_once('connect_db.php');
 if(isset($_SESSION['username'])){
 $user=$_SESSION['username'];
 $id=$_SESSION['cashier_id'];
-$name=$_SESSION['cashier_name'];
 }else{
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
 exit();
@@ -48,6 +47,7 @@ exit();
             <div id="button">
 		        <ul>
                 <li><a href="cashier1.php">Dashboard</a></li>
+			<li><a href="new_order.php">New Order</a></li>
 			<li><a href="view.php">Customer</a></li>
 			<li><a href="view_prescription.php">Prescription</a></li>
 			<li><a href="invoice.php">Invoice</a></li>
@@ -80,8 +80,8 @@ exit();
                                         // echo out the contents of each row into a table
                                         echo "<tr>";
                                         echo '<td>' . $row['cust_fname'] . '</td>';
-                                        echo '<td>' . $row['cust_email_id'] . '</td>';
-                                        echo '<td>' . $row['cust_phone_no'] . '</td>';
+                                        echo '<td>' . $row['cust_email'] . '</td>';
+                                        echo '<td>' . $row['cust_phone'] . '</td>';
                                         echo '<td>' . $row['cust_address'] . '</td>';
                                         echo "</tr>";
                                     } 
