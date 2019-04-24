@@ -49,6 +49,10 @@ echo $message1;
     $('#table1').DataTable( {
         "lengthMenu": [[7], [7]]
     } );
+
+    $('#table2').DataTable( {
+        "lengthMenu": [[7], [7]]
+    } );
 } );
   </script> 
 <script src="js/function.js" type="text/javascript"></script>
@@ -76,7 +80,7 @@ echo $message1;
         <ul class="tabs">  
             <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">View Stock</a></li>  
             <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Add Stock</a></li>  
-             
+            <li><a href="javascript:tabSwitch('tab_3', 'content_3');" id="tab_3">Wanted Stock</a></li>       
         </ul>  
           
         <div id="content_1" class="content">   
@@ -91,7 +95,7 @@ echo $message1;
 
         // get results from database
 		
-        $result = mysqli_query($con,"SELECT * FROM STOCK,ADMINISTRATOR WHERE STOCK.admin_id = $id")
+        $result = mysqli_query($con,"SELECT * FROM STOCK NATURAL JOIN ADMINISTRATOR WHERE admin_id=$id")
                 or die(mysqli_error($con));
 		// display data in table
         echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
@@ -114,6 +118,7 @@ echo $message1;
         echo "</tbody></table>";
 ?>
         </div>  
+
         <div id="content_2" class="content">
 			<form name="myform" onsubmit="return validateForm(this);" action="stock.php" method="post" ><pre>
             Drug Name:    <input name="drug" type="text" style="width:170px" required="required" id="drug" /><br><br>
@@ -126,6 +131,43 @@ echo $message1;
 		</form>
         </div>  
               
+        <div id="content_3" class="content">
+        <?php
+		/* 
+		View
+        Displays all data from 'Stock' table
+		*/
+
+        // connect to the database
+        include_once('connect_db.php');
+
+        // get results from database
+		
+        $result = mysqli_query($con,"SELECT STOCK.stock_id,drug,SUM(drug_quantity),STOCK.quantity
+        FROM STOCK,PRESCRIPTION 
+        WHERE PRESCRIPTION.stock_id = STOCK.stock_id
+        GROUP BY STOCK.stock_id")
+                or die(mysqli_error($con));
+		// display data in table
+        echo '<table id="table2" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+         echo "<thead><tr><th>ID</th><th>Name</th><th>Required Quantity</th></thead><tbody>";
+
+        // loop through results of database query, displaying them in the table
+        while($row = mysqli_fetch_array( $result )) {
+                $required = $row['2'] - $row['3'];
+                if($required>0)
+                {
+                // echo out the contents of each row into a table
+                echo "<tr>";
+                echo '<td>' . $row['0'] . '</td>';
+                echo '<td>' . $row['1'] . '</td>';
+                echo '<td>' . $required . '</td>';
+                }
+            }
+        // close table>
+        echo "</tbody></table>";
+        ?>
+        </div>
     </div>  
   
 </div>

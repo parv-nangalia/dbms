@@ -46,13 +46,13 @@ exit();
         <div id="left_column">
             <div id="button">
 		        <ul>
-                <li><a href="cashier1.php">Dashboard</a></li>
+            <li><a href="cashier1.php">Dashboard</a></li>
 			<li><a href="new_order.php">New Order</a></li>
 			<li><a href="view.php">Customer</a></li>
 			<li><a href="view_prescription.php">Prescription</a></li>
 			<li><a href="invoice.php">Invoice</a></li>
 			<li><a href="logout.php">Logout</a></li>
-                </ul>	
+                </ul>
             </div>
         </div>
         <div id="main">

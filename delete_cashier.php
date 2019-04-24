@@ -8,10 +8,11 @@ $user=$_SESSION['username'];
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
 exit();
 }
+mysqli_query($con,"LOCK TABLE CASHIER");
 $id=$_GET['cashier_id'];
 $sql="DELETE FROM CASHIER WHERE cashier_id='$id'";
 mysqli_query($con,$sql);
-//$rows=mysql_fetch_assoc($result);
+mysqli_query($con,"COMMIT");
 header("location:admin_cashier.php");
 ?>
 

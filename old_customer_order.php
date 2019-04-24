@@ -8,8 +8,26 @@ $username=$_SESSION['username'];
 header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php");
 exit();
 }
-$cid=$_SESSION['cust_id'];
-echo $cid;
+if(isset($_POST['submit']))
+{
+$cid=$_POST['cust_id'];
+$name= $_POST['drug_name'];
+$quantity = $_POST['drug_quantity'];
+$sql=mysqli_query($con,"SELECT stock_id FROM `STOCK` WHERE drug = '$name'") or die(mysqli_error($con));
+if($sql>0)
+{
+	$result=mysqli_fetch_array($sql);
+	$sid = $result['stock_id'];
+	echo $sid;
+}
+else
+{
+ header("location:new_order.php");
+}
+//$sql1=mysqli_query($con,"INSERT INTO `PRESCRIPTION`(`order_date`,`stock_id`,`drug_quantity`,`cust_id`,`cashier_id`) 
+//VALUES (". DATE("Y-m-d"). ",'$sid','$quantity','$cid','$id');") or die(mysqli_error($con));
+//header("location:new_order.php");
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -121,9 +139,10 @@ return false;
 		<?php /*echo $message;
 			  echo $message1;*/
 			  ?>
-		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="old_customer_order.php" method="post" ><pre>
-				Customer First Name: <input name="cust_fname" type="text"  required="required"  id="cust_fname" /><br><br>
-				Customer Last  Name: <input name="cust_lname" type="text" required="required" id="cust_lname" /><br>
+		<form name="form1"  onsubmit="return validateForm(validation_script.js);" action="add_order.php" method="post" ><pre>
+				Customer ID: <input name="cust_id" type="text"  required="required"  value=<?php echo $_GET['cust_id']?> id="cust_id" /><br><br>
+				Medicine: <input name="drug_name" type="text" required="required" id="drug_name" /><br><br>
+				Quantity: <input name="drug_quantity" type="text" required="required" id="drug_quantity" /><br>
 				<input name="submit" type="submit" value="Submit"></pre>
 		</form>
         </div>   

@@ -9,6 +9,7 @@ header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/
 exit();
 }
 if(isset($_POST['submit'])){
+mysqli_query($con,"LOCK TABLE CASHIER");
 $name=$_POST['cashier_name'];
 $sex=$_POST['cashier_sex'];
 $phone=$_POST['cashier_phone'];
@@ -25,6 +26,7 @@ if($sql>0) {header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PH
 $message1="<font color=red>Registration Failed, Try again</font>";
 echo $message1;
 }
+
 	}}
 ?>
 <!DOCTYPE html>
@@ -50,6 +52,10 @@ echo $message1;
 <script type="text/javascript">
  $(document).ready(function() {
     $('#table1').DataTable( {
+        "lengthMenu": [[7], [7]]
+    } );
+
+	$('#table2').DataTable( {
         "lengthMenu": [[7], [7]]
     } );
 } );
@@ -131,8 +137,8 @@ return false;
       
         <ul class="tabs">  
             <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">View Cashier</a></li>  
-            <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Add Cashier</a></li>  
-              
+            <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Add Cashier</a></li>
+            <li><a href="javascript:tabSwitch('tab_3', 'content_3');" id="tab_3">Cashier Sales</a></li>
         </ul>  
           
         <div id="content_1" class="content">  
@@ -183,6 +189,39 @@ return false;
 		</form>
         </div>   
         
+		<div id="content_3" class="content">  
+		<?php 
+        // connect to the database
+        include_once('connect_db.php');
+
+        // get results from database
+		
+        $result = mysqli_query($con,"SELECT CASHIER.cashier_id,CASHIER.cashier_name,SUM(BILL.cost) 
+		FROM BILL,CASHIER
+		WHERE BILL.cashier_id = CASHIER.cashier_id
+		GROUP BY CASHIER.cashier_id") 
+                or die(mysqli_error($con));
+				
+					    
+        // display data in table
+        
+		echo '<table id="table2" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
+        echo "<thead><tr><th>ID</th><th>Name </th><th>Sales Amount</th></thead><tbody>";
+
+        // loop through results of database query, displaying them in the table
+        while($row = mysqli_fetch_array( $result )) {
+                
+                // echo out the contents of each row into a table
+                echo "<tr>";
+				echo '<td>' . $row[0] . '</td>';
+                echo '<td>' . $row[1] . '</td>';
+                echo '<td>' . $row[2] . '</td>';
+				
+		} 
+        // close table>
+        echo "</tbody></table>";
+?>		
+		</div>
       
     </div>  
   

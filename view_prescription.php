@@ -73,7 +73,9 @@ exit();
         // connect to the database
         include_once('connect_db.php');
        // get results from database
-       $result = mysqli_query($con,"SELECT prescription_id,cust_fname,drug,drug_quantity,order_date FROM PRESCRIPTION,CASHIER,CUSTOMER,STOCK WHERE STOCK.stock_id=PRESCRIPTION.stock_id AND PRESCRIPTION.cust_id = CUSTOMER.cust_id AND CASHIER.cashier_id = PRESCRIPTION.cashier_id and CASHIER.cashier_id=$id")or die(mysqli_error($con));
+       $result = mysqli_query($con,"SELECT prescription_id,cust_fname,drug,drug_quantity,order_date
+       FROM PRESCRIPTION NATURAL JOIN CASHIER NATURAL JOIN CUSTOMER NATURAL JOIN STOCK
+       WHERE CASHIER.cashier_id = $id")or die(mysqli_error($con));
 		// display data in table
         echo '<table id="table1" class="table table-bordered table-striped" border="1" cellpadding="5" align="center">';
         echo "<thead><tr> <th>Prescription ID</th><th>Customer Name</th><th>Drug Name</th><th>Quantity</th><th>Date</th></tr></thead>";
@@ -87,7 +89,6 @@ exit();
                 echo '<td>' . $row['drug'] . '</td>';
                 echo '<td>' . $row['drug_quantity'] . '</td>';
                 echo '<td>' . $row['order_date'] . '</td>';
-
 				?>				
 				<?php
 		}

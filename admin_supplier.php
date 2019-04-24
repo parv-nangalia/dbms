@@ -10,6 +10,7 @@ exit();
 }
 if(isset($_POST['submit']))
 {
+mysqli_query($con,"LOCK TABLE SUPPLIER");
 $name=$_POST['supplier_name'];
 $sex= $_POST['supplier_sex'];
 $phone=$_POST['supplier_phone'];
